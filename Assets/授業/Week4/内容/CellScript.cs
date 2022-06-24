@@ -18,17 +18,63 @@ public enum CellState
 }
 
 /// <summary>
-/// CellScriptクラス
+/// Cellの挙動を制御するクラス
 /// </summary>
 public class CellScript : MonoBehaviour
 {
     [Header("CellのText"), Tooltip("CellのText"), SerializeField] Text _text = null;
 
-    void Start()
+    [Header("CellState番号"), Tooltip("CellState番号"), SerializeField] CellState _cellState = CellState.None;
+
+    public CellState CellState
     {
-        if(!_text)
+        get => _cellState;
+        set
+        {
+            _cellState = value;
+            OnCellStateChanged();
+        }
+    }
+
+    void Awake()
+    {
+        if (!_text)
         {
             _text = GetComponentInChildren<Text>();
+        }
+    }
+
+    void Start()
+    {
+        OnCellStateChanged();
+    }
+
+    /// <summary>
+    /// Inspector上で変更が起きた時に呼び出される
+    /// </summary>
+    void OnValidate()
+    {
+        OnCellStateChanged();
+    }
+
+    /// <summary>
+    /// CellStateが更新された時に書き換える
+    /// </summary>
+    void OnCellStateChanged()
+    {
+        if (_cellState == CellState.Mine)
+        {
+            _text.text = "☠";
+            _text.color = Color.red;
+        }
+        else if (_cellState == CellState.None)
+        {
+            _text.text = "";
+        }
+        else
+        {
+            _text.text = ((int)_cellState).ToString();
+            _text.color = Color.blue;
         }
     }
 }
