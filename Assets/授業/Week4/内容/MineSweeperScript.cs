@@ -71,16 +71,34 @@ public class MineSweeperScript : MonoBehaviour
     /// <param name="c"></param>
     void CountUp(int r, int c)
     {
-        _cells[r + 1, c].CellState += 1;
-        _cells[r - 1, c].CellState += 1;
-
-        _cells[r, c + 1].CellState += 1;
-        _cells[r, c - 1].CellState += 1;
-
-        _cells[r + 1, c + 1].CellState += 1;
-        _cells[r - 1, c - 1].CellState += 1;
-
-        _cells[r + 1, c - 1].CellState += 1;
-        _cells[r - 1, c - 1].CellState += 1;
+        if (r + 1 < _rows && _cells[r + 1,c].CellState != CellState.Mine) 
+        {
+            _cells[r + 1, c].CellState += 1; 
+            if(c + 1 < _colums && _cells[r,c + 1].CellState != CellState.Mine)
+            {
+                _cells[r + 1, c + 1].CellState += 1;
+            }
+            else if(c - 1 > - 1 && _cells[r, c - 1].CellState != CellState.Mine)
+            {
+                _cells[r + 1, c - 1].CellState += 1;
+            }
+        }
+        if (c + 1 < _colums && _cells[r, c + 1].CellState != CellState.Mine)
+        {
+            _cells[r, c + 1].CellState += 1; 
+            if(r - 1 > - 1 && _cells[r - 1, c].CellState != CellState.Mine)
+            {
+                _cells[r - 1, c + 1].CellState += 1;
+            }
+        }
+        if (r - 1 > -1 && _cells[r - 1, c].CellState != CellState.Mine)
+        {
+            _cells[r - 1, c].CellState += 1;
+            if(c - 1 > -1 && _cells[r, c - 1].CellState != CellState.Mine)
+            {
+                _cells[r - 1, c - 1].CellState += 1;
+            }
+        }
+        if (c - 1 > -1 && _cells[r, c - 1].CellState != CellState.Mine) { _cells[r, c - 1].CellState += 1; }
     }
 }
