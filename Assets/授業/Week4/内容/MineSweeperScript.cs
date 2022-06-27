@@ -71,34 +71,14 @@ public class MineSweeperScript : MonoBehaviour
     /// <param name="c"></param>
     void CountUp(int r, int c)
     {
-        if (r + 1 < _rows && _cells[r + 1,c].CellState != CellState.Mine) 
-        {
-            _cells[r + 1, c].CellState += 1; 
-            if(c + 1 < _colums && _cells[r,c + 1].CellState != CellState.Mine)
-            {
-                _cells[r + 1, c + 1].CellState += 1;
-            }
-            else if(c - 1 > - 1 && _cells[r, c - 1].CellState != CellState.Mine)
-            {
-                _cells[r + 1, c - 1].CellState += 1;
-            }
-        }
-        if (c + 1 < _colums && _cells[r, c + 1].CellState != CellState.Mine)
-        {
-            _cells[r, c + 1].CellState += 1; 
-            if(r - 1 > - 1 && _cells[r - 1, c].CellState != CellState.Mine)
-            {
-                _cells[r - 1, c + 1].CellState += 1;
-            }
-        }
-        if (r - 1 > -1 && _cells[r - 1, c].CellState != CellState.Mine)
-        {
-            _cells[r - 1, c].CellState += 1;
-            if(c - 1 > -1 && _cells[r, c - 1].CellState != CellState.Mine)
-            {
-                _cells[r - 1, c - 1].CellState += 1;
-            }
-        }
-        if (c - 1 > -1 && _cells[r, c - 1].CellState != CellState.Mine) { _cells[r, c - 1].CellState += 1; }
+        if (r + 1 <_rows && _cells[r + 1, c].CellState != CellState.Mine) { _cells[r + 1, c].CellState += 1; } //右
+        if (r - 1 >= 0 && _cells[r - 1, c].CellState != CellState.Mine) { _cells[r - 1, c].CellState += 1; } //左
+        if (c + 1 < _colums && _cells[r, c + 1].CellState != CellState.Mine) { _cells[r, c + 1].CellState += 1; } //下
+        if (c - 1 >= 0 && _cells[r, c - 1].CellState != CellState.Mine) { _cells[r, c - 1].CellState += 1; } //上
+
+        if (r + 1 < _rows && c + 1 < _colums && _cells[r + 1, c + 1].CellState != CellState.Mine) { _cells[r + 1, c + 1].CellState += 1; } //右下
+        if (r - 1 >= 0 && c - 1 >= 0 && _cells[r - 1, c - 1].CellState != CellState.Mine) { _cells[r - 1, c - 1].CellState += 1; }//左上
+        if (r + 1 < _rows && c - 1 >= 0 && _cells[r + 1, c - 1].CellState != CellState.Mine) { _cells[r + 1, c - 1].CellState += 1; } //左下
+        if (r - 1 >= 0 && c + 1 < _colums && _cells[r - 1, c + 1].CellState != CellState.Mine) { _cells[r - 1, c + 1].CellState += 1; } //右上
     }
 }
