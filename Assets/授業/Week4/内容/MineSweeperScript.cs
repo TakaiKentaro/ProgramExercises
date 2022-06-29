@@ -41,6 +41,8 @@ public class MineSweeperScript : MonoBehaviour
         }
     }
 
+
+
     /// <summary>
     /// 指定した個数爆弾を生成する
     /// </summary>

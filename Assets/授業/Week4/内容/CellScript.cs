@@ -1,5 +1,14 @@
+using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+public enum OpenState
+{
+    Open = 0,
+    Close = 1,
+    Flag = 2,
+}
 
 public enum CellState
 {
@@ -20,11 +29,22 @@ public enum CellState
 /// <summary>
 /// Cellの挙動を制御するクラス
 /// </summary>
-public class CellScript : MonoBehaviour
+public class CellScript : MonoBehaviour, IPointerClickHandler
 {
     [Header("CellのText"), Tooltip("CellのText"), SerializeField] Text _text = null;
-
+    [Header("OpenState番号"), Tooltip("OpenStateの番号"), SerializeField] OpenState _openState = OpenState.Close;
     [Header("CellState番号"), Tooltip("CellState番号"), SerializeField] CellState _cellState = CellState.None;
+    [Tooltip("Cell")] Image _cellImage;
+
+    public OpenState OpenState
+    {
+        get => _openState;
+        set
+        {
+            _openState = value;
+            OnOpenStateChanged();
+        }
+    }
 
     public CellState CellState
     {
@@ -46,7 +66,9 @@ public class CellScript : MonoBehaviour
 
     void Start()
     {
-        OnCellStateChanged();
+        _cellImage = GetComponent<Image>();
+        OnOpenStateChanged();
+        //OnCellStateChanged();
     }
 
     /// <summary>
@@ -54,7 +76,46 @@ public class CellScript : MonoBehaviour
     /// </summary>
     void OnValidate()
     {
-        OnCellStateChanged();
+        OnOpenStateChanged();
+        //OnCellStateChanged();
+    }
+
+    /// <summary>
+    /// 押した判定
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        switch (eventData.pointerId)
+        {
+            case -1:
+                Debug.Log("Left Click");
+                break;
+            case -2:
+                Debug.Log("Right Click");
+                break;
+        }
+    }
+
+    /// <summary>
+    /// OpenStateが更新された時に書き換える
+    /// </summary>
+    void OnOpenStateChanged()
+    {
+        if (_openState == OpenState.Open)
+        {
+            _cellImage.color = Color.black;
+            OnCellStateChanged();
+        }
+        else if (_openState == OpenState.Close)
+        {
+            //_cellImage.color = Color.gray;
+        }
+        else if (_openState == OpenState.Flag)
+        {
+            _text.text = "F";
+            _text.color = Color.yellow;
+        }
     }
 
     /// <summary>
@@ -62,6 +123,8 @@ public class CellScript : MonoBehaviour
     /// </summary>
     void OnCellStateChanged()
     {
+        if (_openState != OpenState.Open) return;
+
         if (_cellState == CellState.Mine)
         {
             _text.text = "☠";
