@@ -90,9 +90,24 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
         {
             case -1:
                 Debug.Log("Left Click");
+                if(_openState == OpenState.Close)
+                {
+                    _openState = OpenState.Open;
+                    OnOpenStateChanged();
+                }
+                else if(_openState == OpenState.Flag)
+                {
+                    _openState = OpenState.Open;
+                    OnOpenStateChanged();
+                }
                 break;
             case -2:
                 Debug.Log("Right Click");
+                if (_openState != OpenState.Flag)
+                {
+                    _openState = OpenState.Flag;
+                    OnOpenStateChanged();
+                }
                 break;
         }
     }
@@ -104,12 +119,12 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
     {
         if (_openState == OpenState.Open)
         {
-            _cellImage.color = Color.black;
+            _cellImage.color = Color.white;
             OnCellStateChanged();
         }
         else if (_openState == OpenState.Close)
         {
-            //_cellImage.color = Color.gray;
+            
         }
         else if (_openState == OpenState.Flag)
         {
