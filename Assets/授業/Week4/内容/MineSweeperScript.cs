@@ -16,6 +16,12 @@ public class MineSweeperScript : MonoBehaviour
 
     [Tooltip("CellPrefab"), SerializeField] CellScript _cellPrefab = null;
     [Tooltip("CellPrefabsの配列")] CellScript[,] _cells = null;
+
+    [Tooltip("現在の数")] int _nowCount;
+    [Tooltip("ゲームクリアに必要な数")] int _clearCount;
+
+    [Tooltip("ゲーム時間")] float _time;
+
     void Start()
     {
         _gridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
@@ -23,9 +29,16 @@ public class MineSweeperScript : MonoBehaviour
 
         _cells = new CellScript[_rows, _colums];
 
+        _clearCount = (_rows * _colums) - _mineCount;
+
         CreateGrid();
 
         CreateMine();
+    }
+
+    private void Update()
+    {
+        _time += Time.deltaTime;
     }
 
     private void CreateGrid()
@@ -41,7 +54,27 @@ public class MineSweeperScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ゲームをクリアしたとき
+    /// </summary>
+    public void GameClear()
+    {
+        _nowCount++;
 
+        if(_nowCount >= _clearCount)
+        {
+            Debug.Log($"ゲームクリア");
+            Debug.Log($"クリアタイム　{(int)_time}秒");
+        }
+    }
+
+    /// <summary>
+    /// 爆弾が出たとき
+    /// </summary>
+    public void GameOver()
+    {
+        Debug.Log($"ゲームオーバー");
+    }
 
     /// <summary>
     /// 指定した個数爆弾を生成する
@@ -73,7 +106,7 @@ public class MineSweeperScript : MonoBehaviour
     /// <param name="c"></param>
     void CountUp(int r, int c)
     {
-        if (r + 1 <_rows && _cells[r + 1, c].CellState != CellState.Mine) { _cells[r + 1, c].CellState += 1; } //右
+        if (r + 1 < _rows && _cells[r + 1, c].CellState != CellState.Mine) { _cells[r + 1, c].CellState += 1; } //右
         if (r - 1 >= 0 && _cells[r - 1, c].CellState != CellState.Mine) { _cells[r - 1, c].CellState += 1; } //左
         if (c + 1 < _colums && _cells[r, c + 1].CellState != CellState.Mine) { _cells[r, c + 1].CellState += 1; } //下
         if (c - 1 >= 0 && _cells[r, c - 1].CellState != CellState.Mine) { _cells[r, c - 1].CellState += 1; } //上
