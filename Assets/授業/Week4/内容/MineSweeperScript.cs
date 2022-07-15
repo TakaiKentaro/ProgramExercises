@@ -11,7 +11,6 @@ public class MineSweeperScript : MonoBehaviour
     [Tooltip("列数"), SerializeField] int _colums = 0;
     [Tooltip("爆弾の数"), SerializeField] int _mineCount = 0;
 
-
     [Tooltip("GridLayoutGroup"), SerializeField] GridLayoutGroup _gridLayoutGroup = null;
 
     [Tooltip("CellPrefab"), SerializeField] CellScript _cellPrefab = null;
@@ -19,6 +18,8 @@ public class MineSweeperScript : MonoBehaviour
 
     [Tooltip("現在の数")] int _nowCount;
     [Tooltip("ゲームクリアに必要な数")] int _clearCount;
+
+    [Tooltip("判定を取得用")] bool _check;
 
     [Tooltip("ゲーム時間")] float _time;
 
@@ -32,8 +33,6 @@ public class MineSweeperScript : MonoBehaviour
         _clearCount = (_rows * _colums) - _mineCount;
 
         CreateGrid();
-
-        CreateMine();
     }
 
     private void Update()
@@ -50,6 +49,7 @@ public class MineSweeperScript : MonoBehaviour
                 var cell = Instantiate(_cellPrefab, _gridLayoutGroup.transform);
                 cell.CellState = CellState.None;
                 _cells[r, c] = cell;
+                cell.name = $"[{r},{c}]";
             }
         }
     }
@@ -61,7 +61,7 @@ public class MineSweeperScript : MonoBehaviour
     {
         _nowCount++;
 
-        if(_nowCount >= _clearCount)
+        if (_nowCount >= _clearCount)
         {
             Debug.Log($"ゲームクリア");
             Debug.Log($"クリアタイム　{(int)_time}秒");
@@ -79,24 +79,32 @@ public class MineSweeperScript : MonoBehaviour
     /// <summary>
     /// 指定した個数爆弾を生成する
     /// </summary>
-    void CreateMine()
+    public void CreateMine(int row, int colum)
     {
-        int count = 0;
-        while (count < _mineCount)
+        if (!_check)
         {
-            var r = Random.Range(0, _rows);
-            var c = Random.Range(0, _colums);
-            if (_cells[r, c].CellState == CellState.Mine)
+            int count = 0;
+            while (count < _mineCount)
             {
-                continue;
-            }
-            else
-            {
-                _cells[r, c].CellState = CellState.Mine;
-                CountUp(r, c);
-                count++;
+                var r = Random.Range(0, _rows);
+                var c = Random.Range(0, _colums);
+                if (_cells[r, c].CellState == CellState.Mine)
+                {
+                    continue;
+                }
+                else if (r == row && c == colum)
+                {
+                    continue;
+                }
+                else
+                {
+                    _cells[r, c].CellState = CellState.Mine;
+                    CountUp(r, c);
+                    count++;
+                }
             }
         }
+        _check = true;
     }
 
     /// <summary>

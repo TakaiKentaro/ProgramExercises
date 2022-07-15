@@ -71,7 +71,6 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
         _cellImage = GetComponent<Image>();
         _mineSweeperScript = transform.parent.GetComponent<MineSweeperScript>();
         OnOpenStateChanged();
-        //OnCellStateChanged();
     }
 
     /// <summary>
@@ -80,7 +79,6 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
     void OnValidate()
     {
         OnOpenStateChanged();
-        //OnCellStateChanged();
     }
 
     /// <summary>
@@ -89,6 +87,8 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
     /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
     {
+        string name = gameObject.name;
+
         switch (eventData.pointerId)
         {
             case -1:
@@ -97,6 +97,7 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
                 {
                     _openState = OpenState.Open;
                     OnOpenStateChanged();
+                    _mineSweeperScript.CreateMine((int)name[1], (int)name[3]);
                 }
                 else if(_openState == OpenState.Flag)
                 {
