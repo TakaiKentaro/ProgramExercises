@@ -82,17 +82,19 @@ public class Sample5 : MonoBehaviour
         M(null);//死
     }
 
-    void N()
+    void M(int count)
     {
+        if (count < 0){ return; }
+
         //メソッドの再起処理
         Debug.Log($"N");
 
         //メソッドは内部で自分自身を呼び出せる
-        N();//無条件呼び出しは、自己を呼び出しの無限ループになる
+        M(count-1);//無条件呼び出しは、自己を呼び出しの無限ループになる
     }
 
     void Start4()
     {
-        N();
+        M(10);
     }
 }
