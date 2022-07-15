@@ -36,7 +36,7 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
     [Header("CellState番号"), Tooltip("CellState番号"), SerializeField] CellState _cellState = CellState.None;
     [Tooltip("Cell")] Image _cellImage;
 
-    [Tooltip("MineSweeperScript")]public MineSweeperScript _mineSweeperScript;
+    [Tooltip("MineSweeperScript")] public MineSweeperScript _mineSweeperScript;
 
     public OpenState OpenState
     {
@@ -93,13 +93,14 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
         {
             case -1:
                 Debug.Log("Left Click");
-                if(_openState == OpenState.Close)
+                if (_openState == OpenState.Close)
                 {
                     _openState = OpenState.Open;
                     OnOpenStateChanged();
-                    _mineSweeperScript.CreateMine((int)name[1], (int)name[3]);
+                    _mineSweeperScript.CreateMine(name);
+
                 }
-                else if(_openState == OpenState.Flag)
+                else if (_openState == OpenState.Flag)
                 {
                     _openState = OpenState.Open;
                     OnOpenStateChanged();
@@ -126,10 +127,10 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
             _cellImage.color = Color.white;
             OnCellStateChanged();
         }
-        else if (_openState == OpenState.Close)
-        {
-            
-        }
+        //else if (_openState == OpenState.Close)
+        //{
+
+        //}
         else if (_openState == OpenState.Flag)
         {
             _text.text = "F";

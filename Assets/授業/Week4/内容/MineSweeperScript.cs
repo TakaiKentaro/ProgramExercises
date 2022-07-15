@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -61,7 +62,7 @@ public class MineSweeperScript : MonoBehaviour
     {
         _nowCount++;
 
-        if (_nowCount >= _clearCount)
+        if (_nowCount > _clearCount)
         {
             Debug.Log($"ゲームクリア");
             Debug.Log($"クリアタイム　{(int)_time}秒");
@@ -79,20 +80,23 @@ public class MineSweeperScript : MonoBehaviour
     /// <summary>
     /// 指定した個数爆弾を生成する
     /// </summary>
-    public void CreateMine(int row, int colum)
+    public void CreateMine(string name)
     {
         if (!_check)
         {
             int count = 0;
+            int x = int.Parse(name[1].ToString());
+            int y = int.Parse(name[3].ToString());
+            Debug.Log($"{x},{y}");
             while (count < _mineCount)
             {
-                var r = Random.Range(0, _rows);
-                var c = Random.Range(0, _colums);
+                var r = UnityEngine.Random.Range(0, _rows);
+                var c = UnityEngine.Random.Range(0, _colums);
                 if (_cells[r, c].CellState == CellState.Mine)
                 {
                     continue;
                 }
-                else if (r == row && c == colum)
+                else if(r == x && c == y)
                 {
                     continue;
                 }
