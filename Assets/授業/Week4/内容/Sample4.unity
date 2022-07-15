@@ -175,9 +175,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8000f4c0629ed5b40939f7064844a948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rows: 2
-  _colums: 2
-  _mineCount: 3
+  _rows: 10
+  _colums: 10
+  _mineCount: 10
   _gridLayoutGroup: {fileID: 760451125}
   _cellPrefab: {fileID: 4150794228771414580, guid: 3494e8cb8dd921343947b3e24a246036, type: 3}
 --- !u!114 &760451125

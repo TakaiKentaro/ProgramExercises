@@ -128,4 +128,16 @@ public class MineSweeperScript : MonoBehaviour
         if (r + 1 < _rows && c - 1 >= 0 && _cells[r + 1, c - 1].CellState != CellState.Mine) { _cells[r + 1, c - 1].CellState += 1; } //左下
         if (r - 1 >= 0 && c + 1 < _colums && _cells[r - 1, c + 1].CellState != CellState.Mine) { _cells[r - 1, c + 1].CellState += 1; } //右上
     }
+
+    /// <summary>
+    /// 自動展開用関数
+    /// </summary>
+    /// <param name="name"></param>
+    public void AutoOpen(string name)
+    {
+        int x = int.Parse(name[1].ToString());
+        int y = int.Parse(name[3].ToString());
+
+        
+    }
 }
