@@ -137,7 +137,7 @@ public class MineSweeperScript : MonoBehaviour
         int x = int.Parse(name[1].ToString());
         int y = int.Parse(name[3].ToString());
 
-        if (_cells[x, y].CellState != CellState.Mine && _cells[x, y].CellState != CellState.None) return;
+        if (_cells[x, y].CellState == CellState.Mine) return;
 
         int count1 = 1, count2 = 1, count3 = 1, count4 = 1, count5 = 1, count6 = 1, count7 = 1, count8 = 1;
 
@@ -246,7 +246,7 @@ public class MineSweeperScript : MonoBehaviour
                 if (_cells[x - count8, y + count8].CellState == CellState.None)
                 {
                     _cells[x - count8, y + count8].OpenState = OpenState.Open;
-                    count1++;
+                    count8++;
                     continue;
                 }
                 _cells[x - count8, y + count8].OpenState = OpenState.Open;
