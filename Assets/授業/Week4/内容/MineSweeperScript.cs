@@ -137,6 +137,8 @@ public class MineSweeperScript : MonoBehaviour
         int x = int.Parse(name[1].ToString());
         int y = int.Parse(name[3].ToString());
 
+        if (_cells[x, y].CellState != CellState.Mine && _cells[x, y].CellState != CellState.None) return;
+
         int count1 = 1, count2 = 1, count3 = 1, count4 = 1, count5 = 1, count6 = 1, count7 = 1, count8 = 1;
 
         while (true)//右
@@ -197,64 +199,59 @@ public class MineSweeperScript : MonoBehaviour
         }
         while (true)//右下
         {
-            if (x + count1 < _rows && _cells[x + count1, y].CellState != CellState.Mine)
+            if (x + count5 < _rows && y + count5 < _colums && _cells[x + count5, y + count5].CellState != CellState.Mine)
             {
-                if (_cells[x + count1, y].CellState == CellState.None)
+                if (_cells[x + count5, y + count5].CellState == CellState.None)
                 {
-                    _cells[x + count1, y].OpenState = OpenState.Open;
-                    count1++;
+                    _cells[x + count5, y + count5].OpenState = OpenState.Open;
+                    count5++;
                     continue;
                 }
-                _cells[x + count1, y].OpenState = OpenState.Open;
+                _cells[x + count5, y + count5].OpenState = OpenState.Open;
             }
             break;
         }
         while (true)//左上
         {
-            if (x + count1 < _rows && _cells[x + count1, y].CellState != CellState.Mine)
+            if (x - count6 >= 0 && y - count6 >= 0 && _cells[x - count6, y - count6].CellState != CellState.Mine)
             {
-                if (_cells[x + count1, y].CellState == CellState.None)
+                if (_cells[x - count6, y - count6].CellState == CellState.None)
                 {
-                    _cells[x + count1, y].OpenState = OpenState.Open;
-                    count1++;
+                    _cells[x - count6, y - count6].OpenState = OpenState.Open;
+                    count6++;
                     continue;
                 }
-                _cells[x + count1, y].OpenState = OpenState.Open;
+                _cells[x - count6, y - count6].OpenState = OpenState.Open;
             }
             break;
         }
         while (true)//左下
         {
-            if (x + count1 < _rows && _cells[x + count1, y].CellState != CellState.Mine)
+            if (x + count7 < _rows && y - count7 >= 0 && _cells[x + count7, y - count7].CellState != CellState.Mine)
             {
-                if (_cells[x + count1, y].CellState == CellState.None)
+                if (_cells[x + count7, y - count7].CellState == CellState.None)
                 {
-                    _cells[x + count1, y].OpenState = OpenState.Open;
-                    count1++;
+                    _cells[x + count7, y - count7].OpenState = OpenState.Open;
+                    count7++;
                     continue;
                 }
-                _cells[x + count1, y].OpenState = OpenState.Open;
+                _cells[x + count7, y - count7].OpenState = OpenState.Open;
             }
             break;
         }
         while (true)//右上
         {
-            if (x + count1 < _rows && _cells[x + count1, y].CellState != CellState.Mine)
+            if (x - count8 >= 0 && y + count8 < _colums && _cells[x - count8, y + count8].CellState != CellState.Mine)
             {
-                if (_cells[x + count1, y].CellState == CellState.None)
+                if (_cells[x - count8, y + count8].CellState == CellState.None)
                 {
-                    _cells[x + count1, y].OpenState = OpenState.Open;
+                    _cells[x - count8, y + count8].OpenState = OpenState.Open;
                     count1++;
                     continue;
                 }
-                _cells[x + count1, y].OpenState = OpenState.Open;
+                _cells[x - count8, y + count8].OpenState = OpenState.Open;
             }
             break;
         }
-
-        if (x + 1 < _rows && y + 1 < _colums && _cells[x + 1, y + 1].CellState != CellState.Mine) { _cells[x + 1, y + 1].OpenState = OpenState.Open; }
-        if (x - 1 >= 0 && y - 1 >= 0 && _cells[x - 1, y - 1].CellState != CellState.Mine) { _cells[x - 1, y - 1].OpenState = OpenState.Open; }
-        if (x + 1 < _rows && y - 1 >= 0 && _cells[x + 1, y - 1].CellState != CellState.Mine) { _cells[x + 1, y - 1].OpenState = OpenState.Open; }
-        if (x - 1 >= 0 && y + 1 < _colums && _cells[x - 1, y + 1].CellState != CellState.Mine) { _cells[x - 1, y + 1].OpenState = OpenState.Open; }
     }
 }
