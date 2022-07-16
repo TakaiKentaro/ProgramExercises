@@ -35,6 +35,7 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
     [Header("OpenState番号"), Tooltip("OpenStateの番号"), SerializeField] OpenState _openState = OpenState.Close;
     [Header("CellState番号"), Tooltip("CellState番号"), SerializeField] CellState _cellState = CellState.None;
     [Tooltip("Cell")] Image _cellImage;
+    [Tooltip("Cellの名前")] string _name;
 
     [Tooltip("MineSweeperScript")] public MineSweeperScript _mineSweeperScript;
 
@@ -68,6 +69,7 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
 
     void Start()
     {
+        _name = gameObject.name;
         _cellImage = GetComponent<Image>();
         _mineSweeperScript = transform.parent.GetComponent<MineSweeperScript>();
         OnOpenStateChanged();
@@ -87,8 +89,6 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
     /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
     {
-        string name = gameObject.name;
-
         switch (eventData.pointerId)
         {
             case -1:
@@ -97,9 +97,8 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
                 {
                     _openState = OpenState.Open;
                     OnOpenStateChanged();
-                    _mineSweeperScript.CreateMine(name);
-                    _mineSweeperScript.AutoOpen(name);
-
+                    _mineSweeperScript.CreateMine(_name);
+                    _mineSweeperScript.AutoOpen(_name);
                 }
                 else if (_openState == OpenState.Flag)
                 {
