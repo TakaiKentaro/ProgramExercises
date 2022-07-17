@@ -127,10 +127,6 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
             _cellImage.color = Color.white;
             OnCellStateChanged();
         }
-        //else if (_openState == OpenState.Close)
-        //{
-
-        //}
         else if (_openState == OpenState.Flag)
         {
             _text.text = "F";
