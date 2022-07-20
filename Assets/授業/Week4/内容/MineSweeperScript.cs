@@ -128,21 +128,36 @@ public class MineSweeperScript : MonoBehaviour
         if (r - 1 >= 0 && c + 1 < _colums && _cells[r - 1, c + 1].CellState != CellState.Mine) { _cells[r - 1, c + 1].CellState += 1; } //右上
     }
 
-    /// <summary>
-    /// 右展開
-    /// </summary>
-    /// <param name="name"></param>
-    public void RightOpen(string name)
+    public void Open(string name)
     {
         int x = int.Parse(name[1].ToString());
         int y = int.Parse(name[3].ToString());
 
+        if (_cells[x, y].CellState == CellState.None)
+        {
+            RightOpen(x, y);
+            LeftOpen(x, y);
+            UnderOpen(x, y);
+            UpperOpen(x, y);
+            UnderRightOpen(x, y);
+            UpperLeftOpen(x, y);
+            UnderLeftOpen(x, y);
+            UpperRightOpen(x, y);
+        }
+    }
+
+    /// <summary>
+    /// 右展開
+    /// </summary>
+    /// <param name="name"></param>
+    void RightOpen(int x, int y)
+    {
         if (x + 1 < _rows && _cells[x + 1, y].CellState != CellState.Mine)
         {
             if (_cells[x + 1, y].CellState == CellState.None)
             {
                 _cells[x + 1, y].OpenState = OpenState.Open;
-                RightOpen($"[{x + 1},{y}]");
+                RightOpen(x + 1, y);
             }
             else
             {
@@ -155,17 +170,14 @@ public class MineSweeperScript : MonoBehaviour
     /// 左展開
     /// </summary>
     /// <param name="name"></param>
-    public void LeftOpen(string name)
+    void LeftOpen(int x, int y)
     {
-        int x = int.Parse(name[1].ToString());
-        int y = int.Parse(name[3].ToString());
-
         if (x - 1 >= 0 && _cells[x - 1, y].CellState != CellState.Mine) //左
         {
             if (_cells[x - 1, y].CellState == CellState.None)
             {
                 _cells[x - 1, y].OpenState = OpenState.Open;
-                LeftOpen($"[{x - 1},{y}]");
+                LeftOpen(x - 1, y);
             }
             else
             {
@@ -178,17 +190,14 @@ public class MineSweeperScript : MonoBehaviour
     /// 下展開
     /// </summary>
     /// <param name="name"></param>
-    public void UnderOpen(string name)
+    void UnderOpen(int x, int y)
     {
-        int x = int.Parse(name[1].ToString());
-        int y = int.Parse(name[3].ToString());
-
         if (y + 1 < _colums && _cells[x, y + 1].CellState != CellState.Mine) //下
         {
             if (_cells[x, y + 1].CellState == CellState.None)
             {
                 _cells[x, y + 1].OpenState = OpenState.Open;
-                UnderOpen($"[{x},{y + 1}]");
+                UnderOpen(x, y + 1);
             }
             else
             {
@@ -201,17 +210,14 @@ public class MineSweeperScript : MonoBehaviour
     /// 上展開
     /// </summary>
     /// <param name="name"></param>
-    public void UpperOpen(string name)
+    void UpperOpen(int x, int y)
     {
-        int x = int.Parse(name[1].ToString());
-        int y = int.Parse(name[3].ToString());
-
         if (y - 1 < _colums && _cells[x, y - 1].CellState != CellState.Mine) //上
         {
             if (_cells[x, y - 1].CellState == CellState.None)
             {
                 _cells[x, y - 1].OpenState = OpenState.Open;
-                UpperOpen($"[{x},{y - 1}]");
+                UpperOpen(x, y - 1);
             }
             else
             {
@@ -224,17 +230,14 @@ public class MineSweeperScript : MonoBehaviour
     /// 右下展開
     /// </summary>
     /// <param name="name"></param>
-    public void　UnderRightOpen(string name)
+    void UnderRightOpen(int x, int y)
     {
-        int x = int.Parse(name[1].ToString());
-        int y = int.Parse(name[3].ToString());
-
         if (x + 1 < _rows && y + 1 < _colums && _cells[x + 1, y + 1].CellState != CellState.Mine)//右下
         {
             if (_cells[x + 1, y + 1].CellState == CellState.None)
             {
                 _cells[x + 1, y + 1].OpenState = OpenState.Open;
-                UnderRightOpen($"[{x + 1},{y + 1}]");
+                UnderRightOpen(x + 1, y + 1);
             }
             else
             {
@@ -247,17 +250,14 @@ public class MineSweeperScript : MonoBehaviour
     /// 左上
     /// </summary>
     /// <param name="name"></param>
-    public void UpperLeftOpen(string name)
+    void UpperLeftOpen(int x, int y)
     {
-        int x = int.Parse(name[1].ToString());
-        int y = int.Parse(name[3].ToString());
-
         if (x - 1 >= 0 && y - 1 >= 0 && _cells[x - 1, y - 1].CellState != CellState.Mine) //左上
         {
             if (_cells[x - 1, y - 1].CellState == CellState.None)
             {
                 _cells[x - 1, y - 1].OpenState = OpenState.Open;
-                UpperLeftOpen($"[{x - 1},{y - 1}]");
+                UpperLeftOpen(x - 1, y - 1);
             }
             else
             {
@@ -270,17 +270,14 @@ public class MineSweeperScript : MonoBehaviour
     /// 左下展開
     /// </summary>
     /// <param name="name"></param>
-    public void UnderLeftOpen(string name)
+    void UnderLeftOpen(int x, int y)
     {
-        int x = int.Parse(name[1].ToString());
-        int y = int.Parse(name[3].ToString());
-
         if (x + 1 < _rows && y - 1 >= 0 && _cells[x + 1, y - 1].CellState != CellState.Mine) //左下
         {
             if (_cells[x + 1, y - 1].CellState == CellState.None)
             {
                 _cells[x + 1, y - 1].OpenState = OpenState.Open;
-                UnderLeftOpen($"[{x + 1},{y - 1}]");
+                UnderLeftOpen(x + 1, y - 1);
             }
             else
             {
@@ -293,23 +290,20 @@ public class MineSweeperScript : MonoBehaviour
     /// 右上展開
     /// </summary>
     /// <param name="name"></param>
-    public void UpperRightOpen(string name)
+    void UpperRightOpen(int x, int y)
     {
-        int x = int.Parse(name[1].ToString());
-        int y = int.Parse(name[3].ToString());
-
         if (x - 1 >= 0 && y + 1 < _colums && _cells[x - 1, y + 1].CellState != CellState.Mine) //右上
         {
             if (_cells[x - 1, y + 1].CellState == CellState.None)
             {
                 _cells[x - 1, y + 1].OpenState = OpenState.Open;
-                UpperRightOpen($"[{x - 1},{y + 1}]");
+                UpperRightOpen(x - 1, y + 1);
             }
             else
             {
                 _cells[x - 1, y + 1].OpenState = OpenState.Open;
             }
         }
-    }  
+    }
 }
 
