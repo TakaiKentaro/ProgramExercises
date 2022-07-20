@@ -98,7 +98,12 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
                     _openState = OpenState.Open;
                     OnOpenStateChanged();
                     _mineSweeperScript.CreateMine(_name);
-                    _mineSweeperScript.AutoOpen(_name);
+
+                    if(CellState != CellState.Mine)
+                    {
+                        _mineSweeperScript.RightOpen(_name);
+                    }
+                    
                 }
                 else if (_openState == OpenState.Flag)
                 {
