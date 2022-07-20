@@ -137,9 +137,7 @@ public class MineSweeperScript : MonoBehaviour
         int x = int.Parse(name[1].ToString());
         int y = int.Parse(name[3].ToString());
 
-        if (_cells[x, y].CellState == CellState.Mine) return;
-
-        if (x + 1 < _rows && _cells[x + 1, y].CellState != CellState.Mine) //右
+        if (x + 1 < _rows && _cells[x + 1, y].CellState != CellState.Mine)
         {
             if (_cells[x + 1, y].CellState == CellState.None)
             {
@@ -157,100 +155,161 @@ public class MineSweeperScript : MonoBehaviour
     /// 左展開
     /// </summary>
     /// <param name="name"></param>
-    public void Open(string name)
+    public void LeftOpen(string name)
     {
-
-    }
+        int x = int.Parse(name[1].ToString());
+        int y = int.Parse(name[3].ToString());
 
         if (x - 1 >= 0 && _cells[x - 1, y].CellState != CellState.Mine) //左
         {
             if (_cells[x - 1, y].CellState == CellState.None)
             {
                 _cells[x - 1, y].OpenState = OpenState.Open;
-                AutoOpen($"[{x - 1},{y}]");
+                LeftOpen($"[{x - 1},{y}]");
             }
             else
             {
                 _cells[x - 1, y].OpenState = OpenState.Open;
             }
         }
+    }
+
+    /// <summary>
+    /// 下展開
+    /// </summary>
+    /// <param name="name"></param>
+    public void UnderOpen(string name)
+    {
+        int x = int.Parse(name[1].ToString());
+        int y = int.Parse(name[3].ToString());
 
         if (y + 1 < _colums && _cells[x, y + 1].CellState != CellState.Mine) //下
         {
             if (_cells[x, y + 1].CellState == CellState.None)
             {
                 _cells[x, y + 1].OpenState = OpenState.Open;
-                AutoOpen($"[{x},{y + 1}]");
+                UnderOpen($"[{x},{y + 1}]");
             }
             else
             {
                 _cells[x, y + 1].OpenState = OpenState.Open;
             }
         }
+    }
+
+    /// <summary>
+    /// 上展開
+    /// </summary>
+    /// <param name="name"></param>
+    public void UpperOpen(string name)
+    {
+        int x = int.Parse(name[1].ToString());
+        int y = int.Parse(name[3].ToString());
 
         if (y - 1 < _colums && _cells[x, y - 1].CellState != CellState.Mine) //上
         {
             if (_cells[x, y - 1].CellState == CellState.None)
             {
                 _cells[x, y - 1].OpenState = OpenState.Open;
-                AutoOpen($"[{x},{y - 1}]");
+                UpperOpen($"[{x},{y - 1}]");
             }
             else
             {
                 _cells[x, y - 1].OpenState = OpenState.Open;
             }
         }
+    }
+
+    /// <summary>
+    /// 右下展開
+    /// </summary>
+    /// <param name="name"></param>
+    public void　UnderRightOpen(string name)
+    {
+        int x = int.Parse(name[1].ToString());
+        int y = int.Parse(name[3].ToString());
 
         if (x + 1 < _rows && y + 1 < _colums && _cells[x + 1, y + 1].CellState != CellState.Mine)//右下
         {
             if (_cells[x + 1, y + 1].CellState == CellState.None)
             {
                 _cells[x + 1, y + 1].OpenState = OpenState.Open;
-                AutoOpen($"[{x + 1},{y + 1}]");
+                UnderRightOpen($"[{x + 1},{y + 1}]");
             }
             else
             {
                 _cells[x + 1, y + 1].OpenState = OpenState.Open;
             }
         }
+    }
+
+    /// <summary>
+    /// 左上
+    /// </summary>
+    /// <param name="name"></param>
+    public void UpperLeftOpen(string name)
+    {
+        int x = int.Parse(name[1].ToString());
+        int y = int.Parse(name[3].ToString());
 
         if (x - 1 >= 0 && y - 1 >= 0 && _cells[x - 1, y - 1].CellState != CellState.Mine) //左上
         {
             if (_cells[x - 1, y - 1].CellState == CellState.None)
             {
                 _cells[x - 1, y - 1].OpenState = OpenState.Open;
-                AutoOpen($"[{x - 1},{y - 1}]");
+                UpperLeftOpen($"[{x - 1},{y - 1}]");
             }
             else
             {
                 _cells[x - 1, y - 1].OpenState = OpenState.Open;
             }
         }
+    }
+
+    /// <summary>
+    /// 左下展開
+    /// </summary>
+    /// <param name="name"></param>
+    public void UnderLeftOpen(string name)
+    {
+        int x = int.Parse(name[1].ToString());
+        int y = int.Parse(name[3].ToString());
 
         if (x + 1 < _rows && y - 1 >= 0 && _cells[x + 1, y - 1].CellState != CellState.Mine) //左下
         {
             if (_cells[x + 1, y - 1].CellState == CellState.None)
             {
                 _cells[x + 1, y - 1].OpenState = OpenState.Open;
-                AutoOpen($"[{x + 1},{y - 1}]");
+                UnderLeftOpen($"[{x + 1},{y - 1}]");
             }
             else
             {
                 _cells[x + 1, y - 1].OpenState = OpenState.Open;
             }
         }
+    }
+
+    /// <summary>
+    /// 右上展開
+    /// </summary>
+    /// <param name="name"></param>
+    public void UpperRightOpen(string name)
+    {
+        int x = int.Parse(name[1].ToString());
+        int y = int.Parse(name[3].ToString());
 
         if (x - 1 >= 0 && y + 1 < _colums && _cells[x - 1, y + 1].CellState != CellState.Mine) //右上
         {
             if (_cells[x - 1, y + 1].CellState == CellState.None)
             {
                 _cells[x - 1, y + 1].OpenState = OpenState.Open;
-                AutoOpen($"[{x - 1},{y + 1}]");
+                UpperRightOpen($"[{x - 1},{y + 1}]");
             }
             else
             {
                 _cells[x - 1, y + 1].OpenState = OpenState.Open;
             }
         }
-    
+    }  
 }
+
