@@ -139,10 +139,10 @@ public class MineSweeperScript : MonoBehaviour
             LeftOpen(x, y);
             UnderOpen(x, y);
             UpperOpen(x, y);
-            //UnderRightOpen(x, y);
-            //UpperLeftOpen(x, y);
-            //UnderLeftOpen(x, y);
-            //UpperRightOpen(x, y);
+            UnderRightOpen(x, y);
+            UpperLeftOpen(x, y);
+            UnderLeftOpen(x, y);
+            UpperRightOpen(x, y);
         }
     }
 
@@ -152,7 +152,7 @@ public class MineSweeperScript : MonoBehaviour
     /// <param name="name"></param>
     void RightOpen(int x, int y)
     {
-        if (x + 1 < _rows && _cells[x + 1, y].CellState != CellState.Mine) //右
+        if (x + 1 < _rows && _cells[x + 1, y].CellState != CellState.Mine && _cells[x + 1, y].OpenState == OpenState.Close) //右
         {
             if (_cells[x + 1, y].CellState == CellState.None)
             {
@@ -176,7 +176,7 @@ public class MineSweeperScript : MonoBehaviour
     /// <param name="name"></param>
     void LeftOpen(int x, int y)
     {
-        if (x - 1 >= 0 && _cells[x - 1, y].CellState != CellState.Mine) //左
+        if (x - 1 >= 0 && _cells[x - 1, y].CellState != CellState.Mine && _cells[x - 1, y].OpenState == OpenState.Close) //左
         {
             if (_cells[x - 1, y].CellState == CellState.None)
             {
@@ -184,8 +184,8 @@ public class MineSweeperScript : MonoBehaviour
 
                 Debug.Log("左");
 
-                //CellScript cell = GameObject.Find($"[{x - 1},{y}]").GetComponent<CellScript>();
-                //cell.AroundCheck();
+                CellScript cell = GameObject.Find($"[{x - 1},{y}]").GetComponent<CellScript>();
+                cell.AroundCheck();
             }
             else
             {
@@ -200,7 +200,7 @@ public class MineSweeperScript : MonoBehaviour
     /// <param name="name"></param>
     void UnderOpen(int x, int y)
     {
-        if (y + 1 < _colums && _cells[x, y + 1].CellState != CellState.Mine) //下
+        if (y + 1 < _colums && _cells[x, y + 1].CellState != CellState.Mine && _cells[x, y + 1].OpenState == OpenState.Close) //下
         {
             if (_cells[x, y + 1].CellState == CellState.None)
             {
@@ -208,8 +208,8 @@ public class MineSweeperScript : MonoBehaviour
 
                 Debug.Log("下");
 
-                //CellScript cell = GameObject.Find($"[{x},{y + 1}]").GetComponent<CellScript>();
-                //cell.AroundCheck();
+                CellScript cell = GameObject.Find($"[{x},{y + 1}]").GetComponent<CellScript>();
+                cell.AroundCheck();
             }
             else
             {
@@ -224,7 +224,7 @@ public class MineSweeperScript : MonoBehaviour
     /// <param name="name"></param>
     void UpperOpen(int x, int y)
     {
-        if (y - 1 >= 0 && _cells[x, y - 1].CellState != CellState.Mine) //上
+        if (y - 1 >= 0 && _cells[x, y - 1].CellState != CellState.Mine && _cells[x, y - 1].OpenState == OpenState.Close) //上
         {
             if (_cells[x, y - 1].CellState == CellState.None)
             {
@@ -232,8 +232,8 @@ public class MineSweeperScript : MonoBehaviour
 
                 Debug.Log("上");
 
-                //CellScript cell = GameObject.Find($"[{x},{y - 1}]").GetComponent<CellScript>();
-                //cell.AroundCheck();
+                CellScript cell = GameObject.Find($"[{x},{y - 1}]").GetComponent<CellScript>();
+                cell.AroundCheck();
             }
             else
             {
@@ -248,7 +248,7 @@ public class MineSweeperScript : MonoBehaviour
     /// <param name="name"></param>
     void UnderRightOpen(int x, int y)
     {
-        if (x + 1 < _rows && y + 1 < _colums && _cells[x + 1, y + 1].CellState != CellState.Mine)//右下
+        if (x + 1 < _rows && y + 1 < _colums && _cells[x + 1, y + 1].CellState != CellState.Mine && _cells[x + 1, y + 1].OpenState == OpenState.Close)//右下
         {
             if (_cells[x + 1, y + 1].CellState == CellState.None)
             {
@@ -256,8 +256,8 @@ public class MineSweeperScript : MonoBehaviour
 
                 Debug.Log("右下");
 
-                //CellScript cell = GameObject.Find($"[{x + 1},{y + 1}]").GetComponent<CellScript>();
-                //cell.AroundCheck();
+                CellScript cell = GameObject.Find($"[{x + 1},{y + 1}]").GetComponent<CellScript>();
+                cell.AroundCheck();
             }
             else
             {
@@ -272,7 +272,7 @@ public class MineSweeperScript : MonoBehaviour
     /// <param name="name"></param>
     void UpperLeftOpen(int x, int y)
     {
-        if (x - 1 >= 0 && y - 1 >= 0 && _cells[x - 1, y - 1].CellState != CellState.Mine) //左上
+        if (x - 1 >= 0 && y - 1 >= 0 && _cells[x - 1, y - 1].CellState != CellState.Mine && _cells[x - 1, y - 1].OpenState == OpenState.Close) //左上
         {
             if (_cells[x - 1, y - 1].CellState == CellState.None)
             {
@@ -280,8 +280,8 @@ public class MineSweeperScript : MonoBehaviour
 
                 Debug.Log("左上");
 
-                //CellScript cell = GameObject.Find($"[{x - 1},{y - 1}]").GetComponent<CellScript>();
-                //cell.AroundCheck();
+                CellScript cell = GameObject.Find($"[{x - 1},{y - 1}]").GetComponent<CellScript>();
+                cell.AroundCheck();
             }
             else
             {
@@ -296,7 +296,7 @@ public class MineSweeperScript : MonoBehaviour
     /// <param name="name"></param>
     void UnderLeftOpen(int x, int y)
     {
-        if (x + 1 < _rows && y - 1 >= 0 && _cells[x + 1, y - 1].CellState != CellState.Mine) //左下
+        if (x + 1 < _rows && y - 1 >= 0 && _cells[x + 1, y - 1].CellState != CellState.Mine && _cells[x + 1, y - 1].OpenState == OpenState.Close) //左下
         {
             if (_cells[x + 1, y - 1].CellState == CellState.None)
             {
@@ -304,8 +304,8 @@ public class MineSweeperScript : MonoBehaviour
 
                 Debug.Log("左下");
 
-                //CellScript cell = GameObject.Find($"[{x + 1},{y - 1}]").GetComponent<CellScript>();
-                //cell.AroundCheck();
+                CellScript cell = GameObject.Find($"[{x + 1},{y - 1}]").GetComponent<CellScript>();
+                cell.AroundCheck();
             }
             else
             {
@@ -320,7 +320,7 @@ public class MineSweeperScript : MonoBehaviour
     /// <param name="name"></param>
     void UpperRightOpen(int x, int y)
     {
-        if (x - 1 >= 0 && y + 1 < _colums && _cells[x - 1, y + 1].CellState != CellState.Mine) //右上
+        if (x - 1 >= 0 && y + 1 < _colums && _cells[x - 1, y + 1].CellState != CellState.Mine && _cells[x - 1, y + 1].OpenState == OpenState.Close) //右上
         {
             if (_cells[x - 1, y + 1].CellState == CellState.None)
             {
@@ -328,8 +328,8 @@ public class MineSweeperScript : MonoBehaviour
 
                 Debug.Log("右上");
 
-                //CellScript cell = GameObject.Find($"[{x - 1},{y + 1}]").GetComponent<CellScript>();
-                //cell.AroundCheck();
+                CellScript cell = GameObject.Find($"[{x - 1},{y + 1}]").GetComponent<CellScript>();
+                cell.AroundCheck();
             }
             else
             {
