@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum LineGameState
+public enum LifeGameState
 {
     Start = 1,
     Update = 0,
@@ -21,7 +21,16 @@ public class LifeGameScript : MonoBehaviour
 
     [Tooltip("GridLayoutGroup"), SerializeField] GridLayoutGroup _gridLayoutGroup = null;
 
-    [Header("LifeGameState番号"), Tooltip("LifeGameState番号"), SerializeField] LineGameState _lifeGameState = LineGameState.Stop;
+    [Header("LifeGameState番号"), Tooltip("LifeGameState番号"), SerializeField] LifeGameState _lifeGameState = LifeGameState.Stop;
+
+    public LifeGameState GameState
+    {
+        get => _lifeGameState;
+        set
+        {
+            _lifeGameState = value;
+        }
+    }
     void Start()
     {
         _gridLayoutGroup = gameObject.GetComponent<GridLayoutGroup>();
@@ -35,11 +44,14 @@ public class LifeGameScript : MonoBehaviour
 
     void CreatGrid()
     {
-        for(var r = 0; r < _rows; r++)
+        for (var r = 0; r < _rows; r++)
         {
-            for(var c = 0; c < _colums; c++)
+            for (var c = 0; c < _colums; c++)
             {
                 var cell = Instantiate(_cellPrefab, _gridLayoutGroup.transform);
+                cell.CellState = LifeGameCellState.Die;
+                _lifeGameCells[r, c] = cell;
+                cell.name = $"{r},{c}";
             }
         }
     }
