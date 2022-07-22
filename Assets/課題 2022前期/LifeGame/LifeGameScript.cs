@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,7 @@ public class LifeGameScript : MonoBehaviour
 
     [SerializeField, Tooltip("Cell")] LifeGameCellScript _cellPrefab = null;
     [Tooltip("_cellPrefabの配列")] LifeGameCellScript[,] _lifeGameCells = null;
+    [Tooltip("Boolの配列")] bool[,] _boolCells;
 
     [Tooltip("GridLayoutGroup"), SerializeField] GridLayoutGroup _gridLayoutGroup = null;
 
@@ -33,11 +35,10 @@ public class LifeGameScript : MonoBehaviour
     }
     void Start()
     {
-        _gridLayoutGroup = gameObject.GetComponent<GridLayoutGroup>();
-        _gridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-        _gridLayoutGroup.constraintCount = _colums;
-
         _lifeGameCells = new LifeGameCellScript[_rows, _colums];
+        _boolCells = new bool[_rows, _colums];
+
+        gameObject.GetComponent<GridLayoutGroup>().constraintCount = _colums;
 
         CreatGrid();
     }
@@ -55,4 +56,6 @@ public class LifeGameScript : MonoBehaviour
             }
         }
     }
+    
+    
 }
