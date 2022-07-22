@@ -127,6 +127,7 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
         if (_openState == OpenState.Open)
         {
             _cellImage.color = Color.white;
+            //_mineSweeperScript.Open(_name);
             OnCellStateChanged();
         }
         else if (_openState == OpenState.Flag)
@@ -160,5 +161,14 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
             _text.color = Color.blue;
             _mineSweeperScript.GameClear();
         }
+    }
+
+    /// <summary>
+    /// 周り8方向確認
+    /// </summary>
+    public void AroundCheck()
+    {
+        Debug.Log("AroundCheck");
+        _mineSweeperScript.Open(_name);
     }
 }
