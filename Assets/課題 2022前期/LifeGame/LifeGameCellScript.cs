@@ -16,6 +16,7 @@ public class LifeGameCellScript : MonoBehaviour
 
     [Header("LifeGameCellCellState番号"), Tooltip("LifeGameCellCellState番号"), SerializeField] LifeGameCellState _lifeGameCellState = LifeGameCellState.Die;
 
+    [Tooltip("LifeGameScript")] LifeGameScript _lifeGameScript;
     [Tooltip("Image")] Image _lifeGameCellImage;
     public LifeGameCellState CellState
     {
@@ -30,15 +31,27 @@ public class LifeGameCellScript : MonoBehaviour
     void Start()
     {
         _lifeGameCellImage = GetComponent<Image>();
+        _lifeGameScript = transform.parent.GetComponent<LifeGameScript>();
+    }
+
+    private void OnValidate()
+    {
+        StateChanged();
+    }
+
+    void Update()
+    {
+        StateChanged();    
     }
 
     void StateChanged()
     {
-        if(_lifeGameCellState == LifeGameCellState.Die)
+        if (_lifeGameCellImage == null) return;
+        if (_lifeGameCellState == LifeGameCellState.Die)
         {
-            //_lifeGameCellImage.color = Color.gray;
+            _lifeGameCellImage.color = Color.black;
         }
-        else if(_lifeGameCellState == LifeGameCellState.Live)
+        else if (_lifeGameCellState == LifeGameCellState.Live)
         {
             _lifeGameCellImage.color = Color.green;
         }
