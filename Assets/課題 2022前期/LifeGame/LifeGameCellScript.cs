@@ -36,7 +36,7 @@ public class LifeGameCellScript : MonoBehaviour
     {
         if(_lifeGameCellState == LifeGameCellState.Die)
         {
-            _lifeGameCellImage.color = Color.black;
+            //_lifeGameCellImage.color = Color.gray;
         }
         else if(_lifeGameCellState == LifeGameCellState.Live)
         {
