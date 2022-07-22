@@ -70,7 +70,7 @@ public class MineSweeperScript : MonoBehaviour
     {
         _nowCount++;
 
-        if (_nowCount > _clearCount)
+        if (_nowCount >= _clearCount)
         {
             Debug.Log($"ゲームクリア");
             Debug.Log($"クリアタイム　{(int)_time}秒");
