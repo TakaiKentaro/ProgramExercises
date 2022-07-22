@@ -99,7 +99,7 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
                     OnOpenStateChanged();
                     _mineSweeperScript.CreateMine(_name);
 
-                    _mineSweeperScript.Open(_name);
+                    AroundCheck();
                     
                 }
                 else if (_openState == OpenState.Flag)
@@ -164,7 +164,7 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
     }
 
     /// <summary>
-    /// 周り8方向確認
+    /// MineSweeperScriptのOpen()を呼ぶ関数
     /// </summary>
     public void AroundCheck()
     {
