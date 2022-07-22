@@ -78,10 +78,10 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
     /// <summary>
     /// Inspector上で変更が起きた時に呼び出される
     /// </summary>
-    void OnValidate()
-    {
-        OnOpenStateChanged();
-    }
+    //void OnValidate()
+    //{
+    //    OnOpenStateChanged();
+    //}
 
     /// <summary>
     /// 押した判定
