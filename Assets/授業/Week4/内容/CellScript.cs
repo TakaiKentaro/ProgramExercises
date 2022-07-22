@@ -99,8 +99,12 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
                     OnOpenStateChanged();
                     _mineSweeperScript.CreateMine(_name);
 
-                    AroundCheck();
-                    
+                    if(CellState == CellState.None)
+                    {
+                        int x = int.Parse(_name[1].ToString());
+                        int y = int.Parse(_name[3].ToString());
+                        _mineSweeperScript.Open(x, y);
+                    }
                 }
                 else if (_openState == OpenState.Flag)
                 {
@@ -161,14 +165,5 @@ public class CellScript : MonoBehaviour, IPointerClickHandler
             _text.color = Color.blue;
             _mineSweeperScript.GameClear();
         }
-    }
-
-    /// <summary>
-    /// MineSweeperScriptのOpen()を呼ぶ関数
-    /// </summary>
-    public void AroundCheck()
-    {
-        Debug.Log("AroundCheck");
-        _mineSweeperScript.Open(_name);
     }
 }
