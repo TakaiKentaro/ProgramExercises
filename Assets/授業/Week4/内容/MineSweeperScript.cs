@@ -40,6 +40,15 @@ public class MineSweeperScript : MonoBehaviour
         _time += Time.deltaTime;
     }
 
+    /// <summary>
+    /// インスペクター上で値を制限
+    /// </summary>
+    private void OnValidate()
+    {
+        int MineLimit = (_rows * _colums) - 1;
+        if(_mineCount > MineLimit) _mineCount = MineLimit;
+    }
+
     private void CreateGrid()
     {
         for (var r = 0; r < _rows; r++)
