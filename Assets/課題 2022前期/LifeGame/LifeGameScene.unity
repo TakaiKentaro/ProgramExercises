@@ -278,7 +278,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Stop
+  m_Text: ll
 --- !u!222 &523102448
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -358,7 +358,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Start
+  m_Text: "\u25B6\uFE0F"
 --- !u!222 &755373376
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -507,8 +507,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: -400}
-  m_SizeDelta: {x: 300, y: 100}
+  m_AnchoredPosition: {x: 889, y: -474}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1021521327
 MonoBehaviour:
@@ -553,7 +553,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1021521328}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1160645241}
+        m_TargetAssemblyTypeName: LifeGameScript, Assembly-CSharp
+        m_MethodName: OnClickGameStop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1021521328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -738,11 +750,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7a5265574a1444f98312a7ccf39cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rows: 35
-  _colums: 60
+  _time: 1
+  _rows: 48
+  _colums: 82
   _cellPrefab: {fileID: 2806935819997241269, guid: d0fff3e2f3530a94dbcda1230a760ebc, type: 3}
   _gridLayoutGroup: {fileID: 1160645242}
-  _lifeGameState: -1
+  _lifeGameState: 0
 --- !u!114 &1160645242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -763,8 +776,8 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 25, y: 25}
-  m_Spacing: {x: 3, y: 3}
+  m_CellSize: {x: 20, y: 20}
+  m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 2
 --- !u!114 &1160645243
@@ -842,8 +855,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: -400}
-  m_SizeDelta: {x: 300, y: 100}
+  m_AnchoredPosition: {x: 889, y: -362}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1404057643
 MonoBehaviour:
@@ -888,7 +901,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1404057644}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1160645241}
+        m_TargetAssemblyTypeName: LifeGameScript, Assembly-CSharp
+        m_MethodName: OnClickGameStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1404057644
 MonoBehaviour:
   m_ObjectHideFlags: 0

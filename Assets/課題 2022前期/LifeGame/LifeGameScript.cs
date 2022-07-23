@@ -1,12 +1,12 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public enum LifeGameState
 {
+    Stop = 0,
     Start = 1,
-    Update = 0,
-    Stop = -1,
 }
 
 /// <summary>
@@ -14,6 +14,8 @@ public enum LifeGameState
 /// </summary>
 public class LifeGameScript : MonoBehaviour
 {
+    [SerializeField, Tooltip("ゲームスピード")] float _time;
+
     [Tooltip("行数"), SerializeField] int _rows = 0;
     [Tooltip("列数"), SerializeField] int _colums = 0;
 
@@ -43,6 +45,22 @@ public class LifeGameScript : MonoBehaviour
         CreatGrid();
     }
 
+    public void OnClickGameStart()
+    {
+        Debug.Log($"再生");
+        GameState = LifeGameState.Start;
+        StartCoroutine("GameCycle");
+    }
+
+    public void OnClickGameStop()
+    {
+        Debug.Log($"停止");
+        GameState = LifeGameState.Stop;
+    }
+
+    /// <summary>
+    /// 盤面を作る
+    /// </summary>
     void CreatGrid()
     {
         for (var r = 0; r < _rows; r++)
@@ -50,12 +68,27 @@ public class LifeGameScript : MonoBehaviour
             for (var c = 0; c < _colums; c++)
             {
                 var cell = Instantiate(_cellPrefab, _gridLayoutGroup.transform);
-                cell.CellState = LifeGameCellState.Die;
+                cell.CellState = LifeGameCellState.Live;
                 _lifeGameCells[r, c] = cell;
-                cell.name = $"{r},{c}";
+                
+                if(cell.CellState == LifeGameCellState.Die)
+                {
+                    _boolCells[r, c] = false;
+                }
+                else if(cell.CellState == LifeGameCellState.Live)
+                {
+                    _boolCells[r, c] = true;
+                }
             }
         }
     }
-    
-    
+
+    IEnumerator GameCycle()
+    {
+        while(GameState == LifeGameState.Start)
+        {
+            Debug.Log("GameCycle中");
+            yield return new WaitForSeconds(_time);
+        }
+    }
 }
