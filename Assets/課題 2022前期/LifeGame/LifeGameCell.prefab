@@ -89,4 +89,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a16104778b88ecb42b9ddbf1a9fce580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lifeGameCellState: 0
+  _lifeGameCellState: 1
