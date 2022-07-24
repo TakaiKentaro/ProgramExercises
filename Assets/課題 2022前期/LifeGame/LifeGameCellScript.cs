@@ -11,7 +11,7 @@ public enum LifeGameCellState
 /// <summary>
 /// LifeGameCellScriptクラス
 /// </summary>
-public class LifeGameCellScript : MonoBehaviour
+public class LifeGameCellScript : MonoBehaviour, IPointerClickHandler
 {
 
     [Header("LifeGameCellCellState番号"), Tooltip("LifeGameCellCellState番号"), SerializeField] LifeGameCellState _lifeGameCellState = LifeGameCellState.Die;
@@ -34,14 +34,18 @@ public class LifeGameCellScript : MonoBehaviour
         _lifeGameScript = transform.parent.GetComponent<LifeGameScript>();
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.pointerId == -1)
+        {
+            Debug.Log("クリックされた");
+            CellState = _lifeGameCellState == LifeGameCellState.Die ? LifeGameCellState.Live : LifeGameCellState.Die;
+        }
+    }
+
     private void OnValidate()
     {
         StateChanged();
-    }
-
-    void Update()
-    {
-        StateChanged();    
     }
 
     void StateChanged()
