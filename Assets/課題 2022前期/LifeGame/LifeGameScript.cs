@@ -45,6 +45,30 @@ public class LifeGameScript : MonoBehaviour
         CreatGrid();
     }
 
+    /// <summary>
+    /// 盤面を作る
+    /// </summary>
+    void CreatGrid()
+    {
+        for (var r = 0; r < _rows; r++)
+        {
+            for (var c = 0; c < _colums; c++)
+            {
+                var cell = Instantiate(_cellPrefab, _gridLayoutGroup.transform);
+                _lifeGameCells[r, c] = cell;
+
+                if (cell.CellState == LifeGameCellState.Die)
+                {
+                    _boolCells[r, c] = false;
+                }
+                else if (cell.CellState == LifeGameCellState.Live)
+                {
+                    _boolCells[r, c] = true;
+                }
+            }
+        }
+    }
+
     public void OnClickGameStart()
     {
         Debug.Log($"再生");
@@ -58,37 +82,79 @@ public class LifeGameScript : MonoBehaviour
         GameState = LifeGameState.Stop;
     }
 
-    /// <summary>
-    /// 盤面を作る
-    /// </summary>
-    void CreatGrid()
+    IEnumerator GameCycle()
+    {
+        while (GameState == LifeGameState.Start)
+        {
+            Debug.Log("GameCycle中");
+            CellMove();
+            yield return new WaitForSeconds(_time);
+        }
+    }
+
+    void CellMove()
     {
         for (var r = 0; r < _rows; r++)
         {
             for (var c = 0; c < _colums; c++)
             {
-                var cell = Instantiate(_cellPrefab, _gridLayoutGroup.transform);
-                cell.CellState = LifeGameCellState.Live;
-                _lifeGameCells[r, c] = cell;
-                
-                if(cell.CellState == LifeGameCellState.Die)
+                CheckAround(r, c);
+            }
+        }
+
+        for(var r = 0; r < _rows; r++)
+        {
+            for (var c = 0; c < _colums; c++)
+            {
+                if (_boolCells[r,c] == true)
                 {
-                    _boolCells[r, c] = false;
+                    _lifeGameCells[r, c].CellState = LifeGameCellState.Live;
                 }
-                else if(cell.CellState == LifeGameCellState.Live)
+                else if (_boolCells[r,c] == false)
                 {
-                    _boolCells[r, c] = true;
+                    _lifeGameCells[r, c].CellState = LifeGameCellState.Die;
                 }
             }
         }
     }
 
-    IEnumerator GameCycle()
+    /// <summary>
+    /// Cellの周囲8近傍を確認
+    /// </summary>
+    void CheckAround(int x, int y)
     {
-        while(GameState == LifeGameState.Start)
+        int count = 0;
+
+        if (_lifeGameCells[x, y].CellState == LifeGameCellState.Die)
         {
-            Debug.Log("GameCycle中");
-            yield return new WaitForSeconds(_time);
+            _boolCells[x, y] = false;
         }
+        else if (_lifeGameCells[x, y].CellState == LifeGameCellState.Live)
+        {
+            _boolCells[x, y] = true;
+        }
+
+        if (x + 1 < _rows && _lifeGameCells[x + 1, y].CellState == LifeGameCellState.Live) { count++; }//右
+        if (x - 1 >= 0 && _lifeGameCells[x - 1, y].CellState == LifeGameCellState.Live) { count++; } //左
+        if (y + 1 < _colums && _lifeGameCells[x, y + 1].CellState == LifeGameCellState.Live) { count++; } //下
+        if (y - 1 >= 0 && _lifeGameCells[x, y - 1].CellState == LifeGameCellState.Live) { count++; } //上
+        if (x + 1 < _rows && y + 1 < _colums && _lifeGameCells[x + 1, y + 1].CellState == LifeGameCellState.Live) { count++; } //右下
+        if (x - 1 >= 0 && y - 1 >= 0 && _lifeGameCells[x - 1, y - 1].CellState == LifeGameCellState.Live) { count++; }//左上
+        if (x + 1 < _rows && y - 1 >= 0 && _lifeGameCells[x + 1, y - 1].CellState == LifeGameCellState.Live) { count++; } //左下
+        if (x - 1 >= 0 && y + 1 < _colums && _lifeGameCells[x - 1, y + 1].CellState == LifeGameCellState.Live) { count++; } //右上
+
+        if (count == 3 && _lifeGameCells[x, y].CellState == LifeGameCellState.Die) //誕生
+        {
+            _boolCells[x, y] = true;
+        }
+        else if (count <= 1 && _lifeGameCells[x, y].CellState == LifeGameCellState.Live) //過疎
+        {
+            _boolCells[x, y] = false;
+        }
+        else if (count >= 4 && _lifeGameCells[x, y].CellState == LifeGameCellState.Live) //過密
+        {
+            _boolCells[x, y] = false;
+        }
+        //--ここまで来たら生存--//
     }
 }
