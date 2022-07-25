@@ -108,6 +108,20 @@ public class LifeGameScript : MonoBehaviour
         }
     }
 
+    public void OnClickReset()
+    {
+        if (GameState == LifeGameState.Stop)
+        {
+            for (var r = 0; r < _rows; r++)
+            {
+                for (var c = 0; c < _colums; c++)
+                {
+                    _lifeGameCells[r, c].CellState = LifeGameCellState.Die;
+                }
+            }
+        }
+    }
+
     IEnumerator GameCycle()
     {
         while (GameState == LifeGameState.Start)
