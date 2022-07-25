@@ -71,15 +71,41 @@ public class LifeGameScript : MonoBehaviour
 
     public void OnClickGameStart()
     {
-        Debug.Log($"再生");
-        GameState = LifeGameState.Start;
-        StartCoroutine("GameCycle");
+        if (GameState == LifeGameState.Stop)
+        {
+            Debug.Log($"再生");
+            GameState = LifeGameState.Start;
+            StartCoroutine("GameCycle");
+        }
     }
 
     public void OnClickGameStop()
     {
-        Debug.Log($"停止");
-        GameState = LifeGameState.Stop;
+        if (GameState == LifeGameState.Start)
+        {
+            Debug.Log($"停止");
+            GameState = LifeGameState.Stop;
+        }     
+    }
+
+    public void OnClickRandom()
+    {
+        if(GameState == LifeGameState.Stop)
+        {
+            int random;
+
+            for (var r = 0; r < _rows; r++)
+            {
+                for (var c = 0; c < _colums; c++)
+                {
+                    random = Random.Range(0,2);
+                    Debug.Log(random);
+                    if (random == 0) { _lifeGameCells[r, c].CellState = LifeGameCellState.Die; }
+                    else if(random == 1) { _lifeGameCells[r, c].CellState = LifeGameCellState.Live; }
+                    
+                }
+            }
+        }
     }
 
     IEnumerator GameCycle()
@@ -102,20 +128,7 @@ public class LifeGameScript : MonoBehaviour
             }
         }
 
-        for(var r = 0; r < _rows; r++)
-        {
-            for (var c = 0; c < _colums; c++)
-            {
-                if (_boolCells[r,c] == true)
-                {
-                    _lifeGameCells[r, c].CellState = LifeGameCellState.Live;
-                }
-                else if (_boolCells[r,c] == false)
-                {
-                    _lifeGameCells[r, c].CellState = LifeGameCellState.Die;
-                }
-            }
-        }
+        ChangeAround();
     }
 
     /// <summary>
@@ -156,5 +169,26 @@ public class LifeGameScript : MonoBehaviour
             _boolCells[x, y] = false;
         }
         //--ここまで来たら生存--//
+    }
+
+    /// <summary>
+    /// 盤面を変更する
+    /// </summary>
+    void ChangeAround()
+    {
+        for (var r = 0; r < _rows; r++)
+        {
+            for (var c = 0; c < _colums; c++)
+            {
+                if (_boolCells[r, c] == true)
+                {
+                    _lifeGameCells[r, c].CellState = LifeGameCellState.Live;
+                }
+                else if (_boolCells[r, c] == false)
+                {
+                    _lifeGameCells[r, c].CellState = LifeGameCellState.Die;
+                }
+            }
+        }
     }
 }
