@@ -565,7 +565,7 @@ GameObject:
   - component: {fileID: 974029859}
   - component: {fileID: 974029858}
   m_Layer: 5
-  m_Name: Stop (1)
+  m_Name: Reset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -589,8 +589,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 889, y: -463}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 917, y: -496}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &974029858
 MonoBehaviour:
@@ -638,7 +638,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1160645241}
         m_TargetAssemblyTypeName: LifeGameScript, Assembly-CSharp
-        m_MethodName: OnClickGameStop
+        m_MethodName: OnClickReset
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -723,8 +723,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 889, y: -238}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 917, y: -385}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1021521327
 MonoBehaviour:
@@ -1071,8 +1071,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 889, y: -351}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 917, y: -441}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1338418184
 MonoBehaviour:
@@ -1205,8 +1205,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 889, y: -126}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 917, y: -330}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1404057643
 MonoBehaviour:
