@@ -23,6 +23,8 @@ public class LifeGameScript : MonoBehaviour
     [Tooltip("_cellPrefabの配列")] LifeGameCellScript[,] _lifeGameCells = null;
     [Tooltip("Boolの配列")] bool[,] _boolCells;
 
+    [SerializeField, Tooltip("スキップ回数")] int _skipCount;
+
     [Tooltip("GridLayoutGroup"), SerializeField] GridLayoutGroup _gridLayoutGroup = null;
 
     [Header("LifeGameState番号"), Tooltip("LifeGameState番号"), SerializeField] LifeGameState _lifeGameState = LifeGameState.Stop;
@@ -43,6 +45,14 @@ public class LifeGameScript : MonoBehaviour
         gameObject.GetComponent<GridLayoutGroup>().constraintCount = _colums;
 
         CreatGrid();
+    }
+
+    void OnValidate()
+    {
+        if(_rows <= 0) { _rows = 1; }
+        if(_rows > 50) { _rows = 50; }
+        if(_colums <= 0) { _colums = 1; }
+        if(_colums > 100) { _colums = 100; }
     }
 
     /// <summary>
@@ -105,6 +115,17 @@ public class LifeGameScript : MonoBehaviour
                     
                 }
             }
+        }
+    }
+
+    public void OnClickSkip(int SkipNum)
+    {
+        if (GameState == LifeGameState.Stop)
+        {
+            for(int i = 0; i < SkipNum; i++)
+            {
+                CellMove();
+            }  
         }
     }
 
