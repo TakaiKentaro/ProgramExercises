@@ -10,19 +10,48 @@ public enum ReversiCellState
 }
 
 /// <summary>
-/// クラス説明
+/// ReversiCell用クラス
 /// </summary>
 public class ReversiCellScript : MonoBehaviour
 {
-    
+    [Header("LifeGameCellCellState番号"), Tooltip("LifeGameCellCellState番号"), SerializeField] ReversiCellState _reverciCellState = ReversiCellState.Empty;
 
+    [SerializeField,Tooltip("Animator")] Animator _anim = null;
+
+    public ReversiCellState CellState
+    {
+        get => _reverciCellState;
+        set
+        {
+            _reverciCellState = value;
+            StateChanged();
+        }
+    }
     void Start()
     {
-        
+
+    }
+
+    private void OnValidate()
+    {
+        StateChanged();
     }
 
     void Update()
     {
         
+    }
+
+    void StateChanged()
+    {
+        Debug.Log("StateAnim");
+        if(_reverciCellState == ReversiCellState.White)
+        {
+            _anim.Play("Black->White");
+        }
+        else if(_reverciCellState == ReversiCellState.Black)
+        {
+            _anim.Play("White->Black");
+        }
     }
 }
