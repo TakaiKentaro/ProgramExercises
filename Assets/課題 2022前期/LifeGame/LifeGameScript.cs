@@ -23,8 +23,6 @@ public class LifeGameScript : MonoBehaviour
     [Tooltip("_cellPrefabの配列")] LifeGameCellScript[,] _lifeGameCells = null;
     [Tooltip("Boolの配列")] bool[,] _boolCells;
 
-    [SerializeField, Tooltip("スキップ回数")] int _skipCount;
-
     [Tooltip("GridLayoutGroup"), SerializeField] GridLayoutGroup _gridLayoutGroup = null;
 
     [Header("LifeGameState番号"), Tooltip("LifeGameState番号"), SerializeField] LifeGameState _lifeGameState = LifeGameState.Stop;
