@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2973642441723862124}
   - component: {fileID: 4945432240947709797}
   - component: {fileID: 4880286230427593951}
+  - component: {fileID: 5300471869316642058}
   m_Layer: 5
   m_Name: ImageBord
   m_TagString: Untagged
@@ -60,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15268159, g: 1, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -77,6 +78,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5300471869316642058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7161455311369661369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c55cf884a7d4ca04f9608e4e1e0b0772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _reversiBordState: 0
+  _reversiCell: {fileID: 4707751376672442562}
+  _image: {fileID: 4880286230427593951}
 --- !u!1001 &3826752171514243783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -183,3 +199,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1067351098145849626, guid: 30b0cf385ab89d54ebafadb626f1a88c, type: 3}
   m_PrefabInstance: {fileID: 3826752171514243783}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4707751376672442562 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8380653806532518405, guid: 30b0cf385ab89d54ebafadb626f1a88c, type: 3}
+  m_PrefabInstance: {fileID: 3826752171514243783}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c7c993b08a4d024b842ea3b4b204b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
