@@ -16,8 +16,9 @@ public class ReversiCellScript : MonoBehaviour
 {
     [Header("LifeGameCellCellState番号"), Tooltip("LifeGameCellCellState番号"), SerializeField] ReversiCellState _reverciCellState = ReversiCellState.Empty;
 
-    [SerializeField,Tooltip("Animator")] Animator _anim = null;
+    [SerializeField, Tooltip("Animator")] Animator _anim = null;
 
+    [SerializeField,Tooltip("Color")] Image _image = null;
     public ReversiCellState CellState
     {
         get => _reverciCellState;
@@ -29,7 +30,7 @@ public class ReversiCellScript : MonoBehaviour
     }
     void Start()
     {
-
+        _image = gameObject.GetComponent<Image>();
     }
 
     private void OnValidate()
@@ -39,19 +40,23 @@ public class ReversiCellScript : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     void StateChanged()
     {
         Debug.Log("StateAnim");
-        if(_reverciCellState == ReversiCellState.White)
+        if (_reverciCellState == ReversiCellState.White)
         {
-            _anim.Play("Black->White");
+            _image.color = Color.white;
         }
-        else if(_reverciCellState == ReversiCellState.Black)
+        else if (_reverciCellState == ReversiCellState.Black)
         {
-            _anim.Play("White->Black");
+            _image.color = Color.black;
+        }
+        else if (_reverciCellState == ReversiCellState.Empty)
+        {
+            _image.color = Color.clear;
         }
     }
 }
