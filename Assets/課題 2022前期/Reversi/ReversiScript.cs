@@ -96,7 +96,7 @@ public class ReversiScript : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            if(_bordCells[_YredPoint, _XredPoint].CellState == ReversiBordState.Placed)
+            if(_bordCells[_YredPoint, _XredPoint].CellState == ReversiBordState.Select)
             {
                 _bordCells[_YredPoint, _XredPoint]._reversiCell.CellState = ReversiCellState.White;
             }

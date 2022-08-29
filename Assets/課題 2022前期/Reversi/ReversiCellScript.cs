@@ -45,7 +45,6 @@ public class ReversiCellScript : MonoBehaviour
 
     void StateChanged()
     {
-        Debug.Log("StateAnim");
         if (_reverciCellState == ReversiCellState.White)
         {
             _image.color = Color.white;

@@ -48,7 +48,6 @@ public class ReversiBord : MonoBehaviour
 
     void StateChanged()
     {
-        Debug.Log("StateAnim");
         if (_reversiBordState == ReversiBordState.Empty)
         {
             _image.color = Color.green;
