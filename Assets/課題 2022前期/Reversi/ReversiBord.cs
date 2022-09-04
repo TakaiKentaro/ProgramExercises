@@ -20,6 +20,7 @@ public class ReversiBord : MonoBehaviour
     [SerializeField, Tooltip("Color")] Image _image;
 
     [Tooltip("Reversi")] ReversiScript _reversi;
+    [Tooltip("置けるか判定")]public bool _placedCheck = false;
 
     public ReversiBordState CellState
     {

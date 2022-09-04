@@ -10,7 +10,7 @@ public class ReversiScript : MonoBehaviour
 {
     [Tooltip("行数")] int _rows = 8;
     [Tooltip("列数")] int _colums = 8;
-    [Tooltip("赤の場所Y")] int r = 0;
+    [Tooltip("赤の場所Y")] int _YredPoint = 0;
     [Tooltip("赤の場所X")] int _XredPoint = 0;
 
     [SerializeField, Tooltip("Bord")] ReversiBord _bordCell = null;
@@ -72,6 +72,15 @@ public class ReversiScript : MonoBehaviour
     /// </summary>
     void PlacedCheck()
     {
+        //-----置ける判定をリセット-----
+        foreach (var i in _bordCells)
+        {
+            i.CellState = ReversiBordState.Empty;
+            i._placedCheck = false;
+        }
+        //------------------------------
+
+        //-----置けるか判定-----
         for (var r = 0; r < _rows; r++)
         {
             for (var c = 0; c < _colums; c++)
@@ -84,77 +93,79 @@ public class ReversiScript : MonoBehaviour
                 {
                     if (c + 1 < _colums && _bordCells[r, c + 1]._reversiCell.CellState == ReversiCellState.Empty)//右
                     {
-                        RightCheck(r, c);
+                        RightPlacedCheck(r, c);
                     }
                     if (c - 1 >= 0 && _bordCells[r, c - 1]._reversiCell.CellState == ReversiCellState.Empty) //左
                     {
-                        LeftCheck(r, c);
+                        LeftPlacedCheck(r, c);
                     }
                     if (r + 1 < _rows && _bordCells[r + 1, c]._reversiCell.CellState == ReversiCellState.Empty) //下 
                     {
-                        UnderCheck(r, c);
+                        UnderPlacedCheck(r, c);
                     }
                     if (r - 1 >= 0 && _bordCells[r - 1, c]._reversiCell.CellState == ReversiCellState.Empty) //上
                     {
-                        UpperCheck(r, c);
+                        UpperPlacedCheck(r, c);
                     }
                     if (c + 1 < _colums && r + 1 < _rows && _bordCells[r + 1, c + 1]._reversiCell.CellState == ReversiCellState.Empty) //右下
                     {
-                        UnderRightOpen(r, c);
+                        UnderRightPlacedOpen(r, c);
                     }
                     if (c - 1 >= 0 && r - 1 >= 0 && _bordCells[r - 1, c - 1]._reversiCell.CellState == ReversiCellState.Empty) //左上
                     {
-                        UpperLeftOpen(r, c);
+                        UpperLeftPlacedOpen(r, c);
                     }
                     if (c + 1 < _colums && r - 1 >= 0 && _bordCells[r - 1, c + 1]._reversiCell.CellState == ReversiCellState.Empty) //左下
                     {
-                        UnderLeftOpen(r, c);
+                        UnderLeftPlacedOpen(r, c);
                     }
                     if (c - 1 >= 0 && r + 1 < _rows && _bordCells[r + 1, c - 1]._reversiCell.CellState == ReversiCellState.Empty) //右上
                     {
-                        UpperRightOpen(r, c);
+                        UpperRightPlacedOpen(r, c);
                     }
                 }
                 else if (_turnCheck && bord._reversiCell.CellState == ReversiCellState.Black) //白の置ける判定
                 {
                     if (c + 1 < _colums && _bordCells[r, c + 1]._reversiCell.CellState == ReversiCellState.Empty)//右
                     {
-                        RightCheck(r, c);
+                        RightPlacedCheck(r, c);
                     }
                     if (c - 1 >= 0 && _bordCells[r, c - 1]._reversiCell.CellState == ReversiCellState.Empty) //左
                     {
-                        LeftCheck(r, c);
+                        LeftPlacedCheck(r, c);
                     }
                     if (r + 1 < _rows && _bordCells[r + 1, c]._reversiCell.CellState == ReversiCellState.Empty) //下 
                     {
-                        UnderCheck(r, c);
+                        UnderPlacedCheck(r, c);
                     }
                     if (r - 1 >= 0 && _bordCells[r - 1, c]._reversiCell.CellState == ReversiCellState.Empty) //上
                     {
-                        UpperCheck(r, c);
+                        UpperPlacedCheck(r, c);
                     }
                     if (c + 1 < _colums && r + 1 < _rows && _bordCells[r + 1, c + 1]._reversiCell.CellState == ReversiCellState.Empty) //右下
                     {
-                        UnderRightOpen(r, c);
+                        UnderRightPlacedOpen(r, c);
                     }
                     if (c - 1 >= 0 && r - 1 >= 0 && _bordCells[r - 1, c - 1]._reversiCell.CellState == ReversiCellState.Empty) //左上
                     {
-                        UpperLeftOpen(r, c);
+                        UpperLeftPlacedOpen(r, c);
                     }
                     if (c + 1 < _colums && r - 1 >= 0 && _bordCells[r - 1, c + 1]._reversiCell.CellState == ReversiCellState.Empty) //左下
                     {
-                        UnderLeftOpen(r, c);
+                        UnderLeftPlacedOpen(r, c);
                     }
                     if (c - 1 >= 0 && r + 1 < _rows && _bordCells[r + 1, c - 1]._reversiCell.CellState == ReversiCellState.Empty) //右上
                     {
-                        UpperRightOpen(r, c);
+                        UpperRightPlacedOpen(r, c);
                     }
                 }
             }
         }
-    }
+        //-----------------------
 
-    void RightCheck(int r, int c)
+
+    }
+    void RightPlacedCheck(int r, int c)
     {
         for (int x = c; x >= 0; x--)
         {
@@ -163,16 +174,18 @@ public class ReversiScript : MonoBehaviour
             if (_turnCheck && _bordCells[r, x]._reversiCell.CellState == ReversiCellState.White)
             {
                 _bordCells[r, c + 1].CellState = ReversiBordState.Placed;
+                _bordCells[r, c + 1]._placedCheck = true;
                 break;
             }
             else if (!_turnCheck && _bordCells[r, x]._reversiCell.CellState == ReversiCellState.Black)
             {
                 _bordCells[r, c + 1].CellState = ReversiBordState.Placed;
+                _bordCells[r, c + 1]._placedCheck = true;
                 break;
             }
         }
     }
-    void LeftCheck(int r, int c)
+    void LeftPlacedCheck(int r, int c)
     {
         for (int x = c; x < _colums; x++)
         {
@@ -181,16 +194,18 @@ public class ReversiScript : MonoBehaviour
             if (_turnCheck && _bordCells[r, x]._reversiCell.CellState == ReversiCellState.White)
             {
                 _bordCells[r, c - 1].CellState = ReversiBordState.Placed;
+                _bordCells[r, c - 1]._placedCheck = true;
                 break;
             }
             else if (!_turnCheck && _bordCells[r, x]._reversiCell.CellState == ReversiCellState.Black)
             {
                 _bordCells[r, c - 1].CellState = ReversiBordState.Placed;
+                _bordCells[r, c - 1]._placedCheck = true;
                 break;
             }
         }
     }
-    void UnderCheck(int r, int c)
+    void UnderPlacedCheck(int r, int c)
     {
         for (int y = r; y >= 0; y--)
         {
@@ -199,16 +214,18 @@ public class ReversiScript : MonoBehaviour
             if (_turnCheck && _bordCells[y, c]._reversiCell.CellState == ReversiCellState.White)
             {
                 _bordCells[r + 1, c].CellState = ReversiBordState.Placed;
+                _bordCells[r + 1, c]._placedCheck = true;
                 break;
             }
             else if (!_turnCheck && _bordCells[y, c]._reversiCell.CellState == ReversiCellState.Black)
             {
                 _bordCells[r + 1, c].CellState = ReversiBordState.Placed;
+                _bordCells[r + 1, c]._placedCheck = true;
                 break;
             }
         }
     }
-    void UpperCheck(int r, int c)
+    void UpperPlacedCheck(int r, int c)
     {
         for (int y = r; y < _rows; y++)
         {
@@ -217,16 +234,18 @@ public class ReversiScript : MonoBehaviour
             if (_turnCheck && _bordCells[y, c]._reversiCell.CellState == ReversiCellState.White)
             {
                 _bordCells[r - 1, c].CellState = ReversiBordState.Placed;
+                _bordCells[r - 1, c]._placedCheck = true;
                 break;
             }
             else if (!_turnCheck && _bordCells[y, c]._reversiCell.CellState == ReversiCellState.Black)
             {
                 _bordCells[r - 1, c].CellState = ReversiBordState.Placed;
+                _bordCells[r - 1, c]._placedCheck = true;
                 break;
             }
         }
     }
-    void UnderRightOpen(int r, int c)
+    void UnderRightPlacedOpen(int r, int c)
     {
         for (int y = r, x = c; y >= 0 || x >= 0; y--, x--)
         {
@@ -235,16 +254,18 @@ public class ReversiScript : MonoBehaviour
             if (_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.White)
             {
                 _bordCells[r + 1, c + 1].CellState = ReversiBordState.Placed;
+                _bordCells[r, c + 1]._placedCheck = true;
                 break;
             }
             else if (!_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.Black)
             {
                 _bordCells[r + 1, c + 1].CellState = ReversiBordState.Placed;
+                _bordCells[r, c + 1]._placedCheck = true;
                 break;
             }
         }
     }
-    void UpperLeftOpen(int r, int c)
+    void UpperLeftPlacedOpen(int r, int c)
     {
         for (int y = r, x = c; y < _rows || x < _colums; y++, x++)
         {
@@ -253,16 +274,18 @@ public class ReversiScript : MonoBehaviour
             if (_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.White)
             {
                 _bordCells[r - 1, c - 1].CellState = ReversiBordState.Placed;
+                _bordCells[r - 1, c - 1]._placedCheck = true;
                 break;
             }
             else if (!_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.Black)
             {
                 _bordCells[r - 1, c - 1].CellState = ReversiBordState.Placed;
+                _bordCells[r - 1, c - 1]._placedCheck = true;
                 break;
             }
         }
     }
-    void UnderLeftOpen(int r, int c)
+    void UnderLeftPlacedOpen(int r, int c)
     {
         for (int y = r, x = c; y < _rows || x >= 0; y++, x--)
         {
@@ -271,16 +294,18 @@ public class ReversiScript : MonoBehaviour
             if (_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.White)
             {
                 _bordCells[r - 1, c + 1].CellState = ReversiBordState.Placed;
+                _bordCells[r - 1, c + 1]._placedCheck = true;
                 break;
             }
             else if (!_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.Black)
             {
                 _bordCells[r - 1, c + 1].CellState = ReversiBordState.Placed;
+                _bordCells[r - 1, c + 1]._placedCheck = true;
                 break;
             }
         }
     }
-    void UpperRightOpen(int r, int c)
+    void UpperRightPlacedOpen(int r, int c)
     {
         for (int y = r, x = c; y >= 0 || x < _colums; y--, x++)
         {
@@ -289,11 +314,13 @@ public class ReversiScript : MonoBehaviour
             if (_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.White)
             {
                 _bordCells[r + 1, c - 1].CellState = ReversiBordState.Placed;
+                _bordCells[r + 1, c - 1]._placedCheck = true;
                 break;
             }
             else if (!_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.Black)
             {
                 _bordCells[r + 1, c - 1].CellState = ReversiBordState.Placed;
+                _bordCells[r + 1, c - 1]._placedCheck = true;
                 break;
             }
 
@@ -306,53 +333,72 @@ public class ReversiScript : MonoBehaviour
         {
             if (_XredPoint > 0)
             {
-                _bordCells[r, _XredPoint].CellState = ReversiBordState.Empty;
                 _XredPoint--;
                 PlacedCheck();
-                _bordCells[r, _XredPoint].CellState = ReversiBordState.Select;
+                _bordCells[_YredPoint, _XredPoint].CellState = ReversiBordState.Select;
             }
         }
         if (Input.GetKeyDown(KeyCode.D)) // 右キーを押した
         {
             if (_XredPoint < _rows - 1)
             {
-                _bordCells[r, _XredPoint].CellState = ReversiBordState.Empty;
                 _XredPoint++;
                 PlacedCheck();
-                _bordCells[r, _XredPoint].CellState = ReversiBordState.Select;
+                _bordCells[_YredPoint, _XredPoint].CellState = ReversiBordState.Select;
             }
         }
         if (Input.GetKeyDown(KeyCode.W)) // 上キーを押した
         {
-            if (r > 0)
+            if (_YredPoint > 0)
             {
-                _bordCells[r, _XredPoint].CellState = ReversiBordState.Empty;
-                r--;
+                _YredPoint--;
                 PlacedCheck();
-                _bordCells[r, _XredPoint].CellState = ReversiBordState.Select;
+                _bordCells[_YredPoint, _XredPoint].CellState = ReversiBordState.Select;
             }
         }
         if (Input.GetKeyDown(KeyCode.S)) // 下キーを押した
         {
-            if (r < _colums - 1)
+            if (_YredPoint < _colums - 1)
             {
-                _bordCells[r, _XredPoint].CellState = ReversiBordState.Empty;
-                r++;
+                _YredPoint++;
                 PlacedCheck();
-                _bordCells[r, _XredPoint].CellState = ReversiBordState.Select;
+                _bordCells[_YredPoint, _XredPoint].CellState = ReversiBordState.Select;
             }
         }
         if (Input.GetKeyDown(KeyCode.Space)) // Cellを配置
         {
-            if (_bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.Empty)
+            if (_bordCells[_YredPoint, _XredPoint]._reversiCell.CellState == ReversiCellState.Empty && _bordCells[_YredPoint, _XredPoint]._placedCheck)
             {
-                if (!_turnCheck) _bordCells[r, _XredPoint]._reversiCell.CellState = ReversiCellState.Black;
-                else _bordCells[r, _XredPoint]._reversiCell.CellState = ReversiCellState.White;
-                _turnCheck = true;
-                BordCheck(_XredPoint, r);
+                if (!_turnCheck) _bordCells[_YredPoint, _XredPoint]._reversiCell.CellState = ReversiCellState.Black;
+                else _bordCells[_YredPoint, _XredPoint]._reversiCell.CellState = ReversiCellState.White;
+                BordCheck(_XredPoint, _YredPoint);
                 PlacedCheck();
+                TurnCheck();
             }
         }
+    }
+
+    void TurnCheck()
+    {
+        //-----次が白か黒か判断-----
+        bool turn = false;
+        foreach (var i in _bordCells)
+        {
+            if (i._placedCheck)
+            {
+                turn = true;
+                break;
+            }
+        }
+
+        if (turn)
+        {
+            if (_turnCheck) _turnCheck = false;
+            else _turnCheck = true;
+        }
+        //---------------------------
+
+        PlacedCheck();
     }
 
     /// <summary>
@@ -361,27 +407,195 @@ public class ReversiScript : MonoBehaviour
     /// <returns></returns>
     void BordCheck(int x, int y)
     {
-        if (!_turnCheck) // 黒の盤面生成
+        RightChangeCheck(y, x);//右
+        LeftChangeCheck(y, x);//左
+        UnderChangeCheck(y, x);//下
+        UpperChangeCheck(y, x);//上
+    }
+    void RightChangeCheck(int r, int c)
+    {
+        for (int x = c; x >= 0; x--)
         {
-            if (x + 1 < _rows && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.White) { } //右
-            if (x - 1 >= 0 && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.White) { } //左
-            if (y + 1 < _colums && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.White) { } //下
-            if (y - 1 >= 0 && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.White) { } //上
-            if (x + 1 < _rows && y + 1 < _colums && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.White) { } //右下
-            if (x - 1 >= 0 && y - 1 >= 0 && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.White) { }//左上
-            if (x + 1 < _rows && y - 1 >= 0 && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.White) { } //左下
-            if (x - 1 >= 0 && y + 1 < _colums && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.White) { } //右上
+            if (_bordCells[r, x]._reversiCell.CellState == ReversiCellState.Empty) break;
+
+            if (_turnCheck && _bordCells[r, x]._reversiCell.CellState == ReversiCellState.White)
+            {
+                while(x < c)
+                {
+                    _bordCells[r, x]._reversiCell.CellState = ReversiCellState.White;
+                    x++;
+                }
+                break;
+            }
+            else if (!_turnCheck && _bordCells[r, x]._reversiCell.CellState == ReversiCellState.Black)
+            {
+                while (x < c)
+                {
+                    _bordCells[r, x]._reversiCell.CellState = ReversiCellState.Black;
+                    x++;
+                }
+                break;
+            }
         }
-        else // 白の盤面生成
+    }
+    void LeftChangeCheck(int r, int c)
+    {
+        for (int x = c; x < _colums; x++)
         {
-            if (x + 1 < _rows && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.Black) { } //右
-            if (x - 1 >= 0 && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.Black) { } //左
-            if (y + 1 < _colums && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.Black) { } //下
-            if (y - 1 >= 0 && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.Black) { } //上
-            if (x + 1 < _rows && y + 1 < _colums && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.Black) { } //右下
-            if (x - 1 >= 0 && y - 1 >= 0 && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.Black) { }//左上
-            if (x + 1 < _rows && y - 1 >= 0 && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.Black) { } //左下
-            if (x - 1 >= 0 && y + 1 < _colums && _bordCells[r, _XredPoint]._reversiCell.CellState == ReversiCellState.Black) { } //右上
+            if (_bordCells[r, x]._reversiCell.CellState == ReversiCellState.Empty) break;
+
+            if (_turnCheck && _bordCells[r, x]._reversiCell.CellState == ReversiCellState.White)
+            {
+                while (x > c)
+                {
+                    _bordCells[r, x]._reversiCell.CellState = ReversiCellState.White;
+                    x--;
+                }
+                break;
+            }
+            else if (!_turnCheck && _bordCells[r, x]._reversiCell.CellState == ReversiCellState.Black)
+            {
+                while (x > c)
+                {
+                    _bordCells[r, x]._reversiCell.CellState = ReversiCellState.Black;
+                    x--;
+                }
+                break;
+            }
+        }
+    }
+    void UnderChangeCheck(int r, int c)
+    {
+        for (int y = r; y >= 0; y--)
+        {
+            if (_bordCells[y, c]._reversiCell.CellState == ReversiCellState.Empty) break;
+
+            if (_turnCheck && _bordCells[y, c]._reversiCell.CellState == ReversiCellState.White)
+            {
+                while (y < r)
+                {
+                    _bordCells[y, c]._reversiCell.CellState = ReversiCellState.White;
+                    y++;
+                }
+                break;
+                
+            }
+            else if (!_turnCheck && _bordCells[y, c]._reversiCell.CellState == ReversiCellState.Black)
+            {
+                while (y < r)
+                {
+                    _bordCells[y, c]._reversiCell.CellState = ReversiCellState.Black;
+                    y++;
+                }
+                break;
+            }
+        }
+    }
+    void UpperChangeCheck(int r, int c)
+    {
+        for (int y = r; y < _rows; y++)
+        {
+            if (_bordCells[y, c]._reversiCell.CellState == ReversiCellState.Empty) break;
+
+            if (_turnCheck && _bordCells[y, c]._reversiCell.CellState == ReversiCellState.White)
+            {
+                while (y > r)
+                {
+                    _bordCells[y, c]._reversiCell.CellState = ReversiCellState.White;
+                    y--;
+                }
+                break;
+            }
+            else if (!_turnCheck && _bordCells[y, c]._reversiCell.CellState == ReversiCellState.Black)
+            {
+                while (y > r)
+                {
+                    _bordCells[y, c]._reversiCell.CellState = ReversiCellState.Black;
+                    y--;
+                }
+                break;
+            }
+        }
+    }
+    void UnderRightChangeOpen(int r, int c)
+    {
+        for (int y = r, x = c; y >= 0 || x >= 0; y--, x--)
+        {
+            if (_bordCells[y, x]._reversiCell.CellState == ReversiCellState.Empty) break;
+
+            if (_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.White)
+            {
+                _bordCells[r + 1, c + 1].CellState = ReversiBordState.Placed;
+                _bordCells[r, c + 1]._placedCheck = true;
+                break;
+            }
+            else if (!_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.Black)
+            {
+                _bordCells[r + 1, c + 1].CellState = ReversiBordState.Placed;
+                _bordCells[r, c + 1]._placedCheck = true;
+                break;
+            }
+        }
+    }
+    void UpperLeftChangeOpen(int r, int c)
+    {
+        for (int y = r, x = c; y < _rows || x < _colums; y++, x++)
+        {
+            if (_bordCells[y, x]._reversiCell.CellState == ReversiCellState.Empty) break;
+
+            if (_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.White)
+            {
+                _bordCells[r - 1, c - 1].CellState = ReversiBordState.Placed;
+                _bordCells[r - 1, c - 1]._placedCheck = true;
+                break;
+            }
+            else if (!_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.Black)
+            {
+                _bordCells[r - 1, c - 1].CellState = ReversiBordState.Placed;
+                _bordCells[r - 1, c - 1]._placedCheck = true;
+                break;
+            }
+        }
+    }
+    void UnderLeftChangeOpen(int r, int c)
+    {
+        for (int y = r, x = c; y < _rows || x >= 0; y++, x--)
+        {
+            if (_bordCells[y, x]._reversiCell.CellState == ReversiCellState.Empty) break;
+
+            if (_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.White)
+            {
+                _bordCells[r - 1, c + 1].CellState = ReversiBordState.Placed;
+                _bordCells[r - 1, c + 1]._placedCheck = true;
+                break;
+            }
+            else if (!_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.Black)
+            {
+                _bordCells[r - 1, c + 1].CellState = ReversiBordState.Placed;
+                _bordCells[r - 1, c + 1]._placedCheck = true;
+                break;
+            }
+        }
+    }
+    void UpperRightChangeOpen(int r, int c)
+    {
+        for (int y = r, x = c; y >= 0 || x < _colums; y--, x++)
+        {
+            if (_bordCells[y, x]._reversiCell.CellState == ReversiCellState.Empty) break;
+
+            if (_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.White)
+            {
+                _bordCells[r + 1, c - 1].CellState = ReversiBordState.Placed;
+                _bordCells[r + 1, c - 1]._placedCheck = true;
+                break;
+            }
+            else if (!_turnCheck && _bordCells[y, x]._reversiCell.CellState == ReversiCellState.Black)
+            {
+                _bordCells[r + 1, c - 1].CellState = ReversiBordState.Placed;
+                _bordCells[r + 1, c - 1]._placedCheck = true;
+                break;
+            }
+
         }
     }
 }
