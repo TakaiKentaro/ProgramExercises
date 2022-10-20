@@ -16,13 +16,13 @@ public class MessageClick : MonoBehaviour
     {
         if(_messageText == null)
         {
-            _messageText = gameObject.GetComponent<TMP_Text>();
-            _messageText.text = _messageArray[0];
+            _messageText = transform.Find("MessageWindow/MessageText (TMP)").GetComponent<TMP_Text>();
         }
 
         _messageArray = new string[2];
         _messageArray[0] = _message1;
         _messageArray[1] = _message2;
+        _messageText.text = _messageArray[0];
     }
 
     private void Update()
