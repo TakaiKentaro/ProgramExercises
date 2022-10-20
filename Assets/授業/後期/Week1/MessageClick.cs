@@ -14,12 +14,15 @@ public class MessageClick : MonoBehaviour
     string _message2 = "‚©‚«‚­‚¯‚±";
     void Start()
     {
+        if(_messageText == null)
+        {
+            _messageText = gameObject.GetComponent<TMP_Text>();
+            _messageText.text = _messageArray[0];
+        }
+
         _messageArray = new string[2];
         _messageArray[0] = _message1;
         _messageArray[1] = _message2;
-
-        _messageText = GetComponent<TMP_Text>();
-        _messageText.text = "a";
     }
 
     private void Update()
@@ -32,22 +35,26 @@ public class MessageClick : MonoBehaviour
 
     void NextMessage()
     {
-        _messageCount++;
-        _messageText.text = _messageArray[_messageCount % _messageArray.Length];
-        StartCoroutine("SendMessage");
+        _messageCount = (_messageCount + 1) % _messageArray.Length;
+        _messageText.text = "";
+        StopCoroutine(nameof(SendMessage)); //˜A‘Å‘Îô
+        StartCoroutine(nameof(SendMessage));
     }
 
     IEnumerator SendMessage()
     {
         int count = 0;
         string message = _messageArray[_messageCount];
+        
         while (count < message.Length)
         {
             yield return new WaitForSeconds(_messageSendTime);
-            _messageText.text = message[count].ToString();
+            _messageText.text += message[count].ToString();
             count++;
+            Debug.Log("a");
         }
-        yield return new WaitForSeconds(_messageSendTime);
-        _messageText.text = message[count].ToString();
+        //yield return new WaitForSeconds(_messageSendTime);
+        //_messageText.text += message[count].ToString();
+        
     }
 }
