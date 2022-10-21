@@ -5,8 +5,8 @@ using TMPro;
 
 public class MessageClick : MonoBehaviour
 {
-    [SerializeField] TMP_Text _messageText;
-    [SerializeField] float _messageSendTime;
+    [SerializeField,Tooltip("メッセージを表示するTMP_Text")] TMP_Text _messageText;
+    [SerializeField,Tooltip("メッセージが流れるスピード")] float _messageSendTime;
 
     int _messageCount = 0;
     string[] _messageArray;
@@ -53,8 +53,5 @@ public class MessageClick : MonoBehaviour
             count++;
             Debug.Log("a");
         }
-        //yield return new WaitForSeconds(_messageSendTime);
-        //_messageText.text += message[count].ToString();
-        
     }
 }
