@@ -25,7 +25,7 @@ public class MessageClick : MonoBehaviour
         _messageText.text = _messageArray[0];
     }
 
-    private void Update()
+    void Update()
     {
         if (Input.GetButtonDown("Fire1"))
         {
@@ -51,7 +51,6 @@ public class MessageClick : MonoBehaviour
             yield return new WaitForSeconds(_messageSendTime);
             _messageText.text += message[count].ToString();
             count++;
-            Debug.Log("a");
         }
     }
 }
