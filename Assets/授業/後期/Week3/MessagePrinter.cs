@@ -23,13 +23,13 @@ public class MessagePrinter : MonoBehaviour
     {
         get
         {
-            if(_currentIndex + 1 >= _message.Length)
+            if(_currentIndex == _message.Length - 1)
             {
-                return true;
+                return  false;
             }
             else
             {
-                return false;
+                return true;
             }   
         }
     }
@@ -61,5 +61,15 @@ public class MessagePrinter : MonoBehaviour
         _interval = _speed / _message.Length;
         _message = message;
         Debug.Log(_message);
+    }
+
+    /// <summary>
+    /// 現在再生中の文字出力を省略する。
+    /// </summary>
+    public void Skip()
+    {
+        // TODO: ここにコードを書く
+        _textUi.text = _message;
+        _currentIndex = _message.Length - 1;
     }
 }
