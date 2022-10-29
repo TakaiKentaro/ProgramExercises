@@ -19,18 +19,18 @@ public class MessagePrinter : MonoBehaviour
     // 何も指していない場合は -1 とする。
     int _currentIndex = -1;
 
-    public bool IsPrinting 
+    public bool IsPrinting
     {
         get
         {
-            if(_currentIndex == _message.Length - 1)
+            if (_currentIndex == _message.Length - 1)
             {
-                return  false;
+                return false;
             }
             else
             {
                 return true;
-            }   
+            }
         }
     }
 
@@ -56,8 +56,10 @@ public class MessagePrinter : MonoBehaviour
 
     public void ShowMessage(string message)
     {
+        if (_textUi == null) { return; }
         _textUi.text = "";
         _currentIndex = -1;
+        _elapsed = 0;
         _interval = _speed / _message.Length;
         _message = message;
         Debug.Log(_message);
@@ -68,7 +70,6 @@ public class MessagePrinter : MonoBehaviour
     /// </summary>
     public void Skip()
     {
-        // TODO: ここにコードを書く
         _textUi.text = _message;
         _currentIndex = _message.Length - 1;
     }
