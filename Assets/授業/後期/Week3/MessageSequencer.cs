@@ -8,6 +8,8 @@ public class MessageSequencer : MonoBehaviour
 {
     [SerializeField] MessagePrinter _printer = default;
 
+    [SerializeField] BackGroundManager _backGroundManager = default;
+
     [SerializeField] string[] _messages = default;
 
     int _currentIndex = -1;
