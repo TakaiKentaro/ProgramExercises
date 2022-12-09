@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Week4Sample : MonoBehaviour
 {
-    void Start()
+    private void Update()
     {
         RotateAsync().MoveNext();
     }
@@ -14,7 +14,7 @@ public class Week4Sample : MonoBehaviour
     private IEnumerator RotateAsync()
     {
         Debug.Log("RotateAsync");
-        while (RotateAsync().MoveNext())
+        while (true)
         {
             transform.Rotate(0, 1, 0);
             yield return null;
