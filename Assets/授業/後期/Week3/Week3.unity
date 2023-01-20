@@ -575,6 +575,8 @@ GameObject:
   - component: {fileID: 1571062922}
   - component: {fileID: 1571062921}
   - component: {fileID: 1571062923}
+  - component: {fileID: 1571062925}
+  - component: {fileID: 1571062924}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -623,8 +625,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: daa7ed90e8cddd84d8d78e62a9c16df0, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -660,6 +662,32 @@ MonoBehaviour:
   - {r: 0, g: 0.23970461, b: 1, a: 1}
   - {r: 0.23448813, g: 1, b: 0, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1571062924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571062918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68baf84e987edd34c9250494ba3e6812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actor: {fileID: 1571062925}
+--- !u!114 &1571062925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571062918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 568d00f54a536a947bb2c1cadf90bc22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _image: {fileID: 1571062921}
 --- !u!1 &1889104304
 GameObject:
   m_ObjectHideFlags: 0
