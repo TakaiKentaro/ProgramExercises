@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,32 @@ using UnityEngine.UI;
 
 public class CharactorSequencer : MonoBehaviour
 {
-    [SerializeField] private Image _imagePositionLeft; // 左画像
-    [SerializeField] private Image _imagePositionSenter; // 中央画像
-    [SerializeField] private Image _imagePositionRight; // 右画像
+    [SerializeField] private CharactorTransitioner _charactorTransitioner = default;
 
-    [SerializeField] private Sprite[] _charactorSprite;
-    
+    [SerializeField] private Sprite[] _charactorSprites;
+
+    int _currentIndex = -1;
+    private void Start()
+    {
+        MoveNext();
+    }
+
+    private void Update()
+    {
+        throw new NotImplementedException();
+    }
+
+    void MoveNext()
+    {
+        if (_charactorSprites == null || _charactorSprites.Length == 0)
+        {
+            return;
+        }
+
+        if (_currentIndex + 1 > _charactorSprites.Length)
+        {
+            _currentIndex++;
+            
+        }
+    }
 }

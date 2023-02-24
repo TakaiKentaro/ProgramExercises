@@ -960,6 +960,7 @@ MonoBehaviour:
   - Red
   - Blue
   - Green
+  - White
 --- !u!114 &1919235810
 MonoBehaviour:
   m_ObjectHideFlags: 0
